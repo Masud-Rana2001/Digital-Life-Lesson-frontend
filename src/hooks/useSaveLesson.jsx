@@ -7,7 +7,7 @@ export default function useSaveLesson(lesson, user, refetchFn) {
 
   const [saved, setSaved] = useState(false);
   const [favoritesCount, setFavoritesCount] = useState(0);
-  console.log("saved",saved)
+ 
   // Sync initial state
   useEffect(() => {
     if (!lesson || !user) return;

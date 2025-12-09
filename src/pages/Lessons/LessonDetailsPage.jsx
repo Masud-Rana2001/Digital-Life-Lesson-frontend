@@ -13,6 +13,7 @@ import LessonCreatorCard from "./LessonCreatorCard";
 import LessonComments from "./LessonComments";
 import LessonPremiumLock from "./LessonPremiumLock";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import SimilarLessons from "./SimilarLessons";
 
 export default function LessonDetailsPage() {
   const { user } = useAuth();
@@ -77,7 +78,9 @@ export default function LessonDetailsPage() {
           
         />
         
-        <LessonComments user={user} lesson={ lesson} refetchDetails={refetchDetails} />
+        <LessonComments user={user} lesson={lesson} refetchDetails={refetchDetails} />
+        
+        <SimilarLessons lesson={lesson} />
         
       </article>
     </div>

@@ -24,7 +24,7 @@ const CreatorProfile = () => {
       });
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+    <div className=" flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-4xl rounded-2xl shadow-xl  bg-gradient-radial from-white via-[#f5f0ff] to-[#dbe7ff] 
       bg-[radial-gradient(circle_at_70%_40%,#e6d7ff_0%,#f6f2ff_35%,#e4f0ff_70%,#ffffff_100%)] 
       bg-no-repeat bg-cover overflow-hidden border border-gray-300">
@@ -40,7 +40,7 @@ const CreatorProfile = () => {
           {/* Profile Avatar */}
           <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
             <img
-              src={creator.imageUrl}
+              src={creator.imageURL}
               alt={creator.name || "Creator"}
               className="h-32 w-32 rounded-full object-cover ring-4 ring-base-100 shadow-xl"
             />
@@ -89,7 +89,7 @@ const CreatorProfile = () => {
               {creator.name}'s Lessons
             </h3>
 
-            {createdLessons.length === 0 && (
+            {lessons.length === 0 && (
               <p className="text-base-content/60 text-center">
                 {creator.name} hasn't created any lessons yet.
               </p>

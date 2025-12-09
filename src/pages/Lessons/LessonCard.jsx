@@ -1,12 +1,15 @@
 import {useState} from 'react';
-
+import { RiDeleteBin5Fill } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
 import { Link } from "react-router";
 import { LockClosedIcon, StarIcon,HeartIcon,BookmarkIcon } from "@heroicons/react/24/solid";
 import {  ShareIcon  } from "@heroicons/react/24/outline";
 
+
 import useLikeLesson from '../../hooks/useLikeLesson';
 import useSaveLesson from '../../hooks/useSaveLesson';
 import ShareModal from './ShareComponent/ShareModal';
+import OptionBtn from './ShareComponent/OptionBtn';
 
 export default function LessonCard({
   lesson,
@@ -30,7 +33,7 @@ export default function LessonCard({
       const shareUrl = `https://digital-life-lessons.web.app/lesson/${lesson._id}`;
       const Sheretitle = lesson.title;
 
-
+      const [showOptions,setShowOptions] = useState(false)
 
   
   const {
@@ -46,7 +49,11 @@ export default function LessonCard({
   } = lesson;
 
 
+  const isMyLesson = user?.email && lesson?.creator?.email
+  ? user.email === lesson.creator.email
+  : false;
 
+  
 
   const isPremium = accessLevel === "Premium";
   const userIsPremium = user?.isPremium;
@@ -94,7 +101,9 @@ export default function LessonCard({
             </div>
           </div>
         </div>
-
+       
+        <div className="flex">
+          
         <Link
           to={`/dashboard/my-lessons/${_id}`}
           className={`
@@ -102,10 +111,16 @@ export default function LessonCard({
             ${restricted
               ? "text-base-content/40 cursor-not-allowed"
               : "text-primary hover:text-primary-focus"}
-          `}
-        >
+              `}
+              >
           {restricted ? "Locked" : "Details"}
         </Link>
+          <OptionBtn
+            isMyLesson={isMyLesson}
+            setShowOptions={setShowOptions}
+            showOptions={showOptions}
+          />
+          </div>
       </div>
 
       {/* Image Section */}

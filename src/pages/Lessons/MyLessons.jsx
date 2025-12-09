@@ -20,7 +20,7 @@ function MyLessons() {
     },
     enabled: !!user?.email,
   });
-
+ 
   if (isLoading) return <LoadingSpinner/>
   if (error) return <ErrorPage/>
 

@@ -3,7 +3,7 @@ import useCreator from '../../hooks/useCreator'
 
 function ShowComments({ lesson,email }) {
   const { creator ,creatorRefetch} = useCreator(email);
-  console.table({ creator,creatorRefetch})
+ 
   return (
     <div><div className="space-y-4">
   {lesson?.comments?.length === 0 && (
@@ -21,7 +21,7 @@ function ShowComments({ lesson,email }) {
         {/* Avatar */}
         <div className="flex-shrink-0">
           <img
-            src={ creator.imageUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(
+            src={ creator.imageURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(
               c.email
             )}&background=38bdf8&color=fff&rounded=true&size=48`}
             alt={c.email}

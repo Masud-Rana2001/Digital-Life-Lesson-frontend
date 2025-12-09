@@ -37,7 +37,7 @@ const Profile = () => {
   });
  
  
-
+  
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-4xl rounded-2xl shadow-xl  bg-gradient-radial from-white via-[#f5f0ff] to-[#dbe7ff] 

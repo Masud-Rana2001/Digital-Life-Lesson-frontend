@@ -23,7 +23,7 @@ export default function FeaturedLessons() {
   }
 
   return (
-    <section className="mt-10 shadow rounded-2xl py-16 px-5 bg-gradient-to-r bg-gradient-to-br from-sky-50 via-cyan-50 to-sky-50">
+    <section className="mt-10 shadow rounded-2xl py-16 px-5 bg-gradient-to-r bg-gradient-to-br from-sky-50 via-cyan-50 to-sky-50 ">
       {/* SECTION TITLE */}
       <div className="text-center mb-10">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-12 

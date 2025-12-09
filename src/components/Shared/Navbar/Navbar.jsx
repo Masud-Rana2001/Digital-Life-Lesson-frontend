@@ -133,6 +133,7 @@ const Navbar = () => {
             >
               <img
                 src={user.photoURL || avatarImg}
+                referrerPolicy="no-referrer"
                 className="w-11 h-11 rounded-full border shadow"
               />
             </button>
