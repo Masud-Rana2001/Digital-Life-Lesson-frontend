@@ -69,7 +69,23 @@ function PublicLessons() {
       </div>
 
       {/* Pagination */}
-      
+      <div className="flex justify-center mt-10 gap-2">
+        <button
+          className="btn btn-outline"
+          disabled={page === 1}
+          onClick={() => setPage(prev => prev - 1)}
+        >
+          Prev
+        </button>
+
+        <button
+          className="btn btn-outline"
+          disabled={page === totalPages}
+          onClick={() => setPage(prev => prev + 1)}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
