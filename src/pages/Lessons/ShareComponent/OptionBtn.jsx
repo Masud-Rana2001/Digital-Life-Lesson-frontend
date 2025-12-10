@@ -6,11 +6,14 @@ import { Link } from "react-router";
 import Swal from 'sweetalert2'
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from './../../../hooks/useAxiosSecure';
+import UpdateLessonForm from '../UpdateLessonForm';
 
 
-function OptionBtn({ isMyLesson, setShowOptions, showOptions,lessonId ,refetchFn}) {
+function OptionBtn({ isMyLesson, setShowOptions, showOptions, lessonId, refetchFn,lesson }) {
+  
   const axiosInstance = useAxiosSecure()
-  const menuRef = useRef(null)
+  const menuRef = useRef(null);
+  const updaterFormRef = useRef(null)
   useEffect(() => {
     function handleClickOutside(e) {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -24,7 +27,8 @@ function OptionBtn({ isMyLesson, setShowOptions, showOptions,lessonId ,refetchFn
 
 
   const handleDeleteLesson =async () => {
-   const result = await Swal.fire({
+    const result = await
+      Swal.fire({
   title: "Are you sure to delete the lesson ?",
   text: "You won't be able to revert this!",
   icon: "warning",
@@ -71,7 +75,7 @@ function OptionBtn({ isMyLesson, setShowOptions, showOptions,lessonId ,refetchFn
           "
         >
           <button
-            onClick={() => console.log('edit')}
+            onClick={() => updaterFormRef.current.showModal()}
             className="
               w-full text-left px-4 py-2 text-sm 
               hover:bg-warning hover:text-white transition
@@ -88,7 +92,18 @@ function OptionBtn({ isMyLesson, setShowOptions, showOptions,lessonId ,refetchFn
             "
           >
             <RiDeleteBin5Fill className="inline-block mr-1" /> Delete
-          </button>
+                </button>
+                
+                 <dialog ref={updaterFormRef}  className="modal">
+                  <div className="modal-box w-11/12 max-w-5xl p-1">
+   const refetchFn =
+                    <UpdateLessonForm
+                      lesson={lesson}
+                      updaterFormRef={updaterFormRef}
+                      refetchFn={ refetchFn}
+                    />
+                  </div>
+                </dialog>
         </div>
       )}
     </div>

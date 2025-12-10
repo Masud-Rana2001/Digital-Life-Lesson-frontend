@@ -121,6 +121,7 @@ export default function LessonCard({
             setShowOptions={setShowOptions}
             showOptions={showOptions}
             refetchFn={refetchFn}
+            lesson={lesson}
           />
           </div>
       </div>
