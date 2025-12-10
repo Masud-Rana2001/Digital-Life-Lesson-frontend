@@ -116,9 +116,11 @@ export default function LessonCard({
           {restricted ? "Locked" : "Details"}
         </Link>
           <OptionBtn
+            lessonId = {_id}
             isMyLesson={isMyLesson}
             setShowOptions={setShowOptions}
             showOptions={showOptions}
+            refetchFn={refetchFn}
           />
           </div>
       </div>
