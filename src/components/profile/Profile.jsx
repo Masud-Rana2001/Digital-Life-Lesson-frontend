@@ -41,12 +41,12 @@ const Profile = () => {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center px-4 py-2 md:py-4 ">
       <div className="w-full max-w-4xl rounded-2xl shadow-xl bg-gradient-radial from-white via-[#f5f0ff] to-[#dbe7ff]">
 
         {/* Cover */}
         <div className="relative">
-          <img src={userDB.coverPhoto} className="w-full h-60 object-cover" />
+          <img src={userDB.coverPhoto} className="w-full h-60 object-cover rounded-t-2xl" />
 
           {/* Avatar */}
           <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
@@ -68,6 +68,11 @@ const Profile = () => {
                 ⭐ Premium
               </span>
             )}
+            {userDB?.role === "admin" && (
+              <span className="px-2 text-xs flex justify-center items-center bg-yellow-50 text-yellow-900 rounded-md font-bold border">
+                🤵 Admin
+              </span>
+            )}
           </h2>
 
           <p className="text-sm mt-1">{user?.email}</p>
@@ -79,12 +84,26 @@ const Profile = () => {
           </div>
 
           {/* Profile Update Button */}
+          <div>
+
           <button
             onClick={() => updaterFormRef.current.showModal()}
             className="btn btn-outline btn-primary mt-6"
           >
             Update Profile
           </button>
+            {
+              !userDB?.isPremium && (
+
+                <Link
+                to="/pricing"
+                className="btn btn-outline btn-secondary ms-2 mt-6"
+              >
+              ⭐ Update Membership
+              </Link>
+              ) 
+          }
+          </div>
 
           {/* Stats */}
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -113,6 +132,10 @@ const Profile = () => {
             Your Created Lessons
           </h3>
 
+
+            {createdLessons.length === 0 && (
+              <h2 className="text-2xl text-center">You have not created any lessons yet.</h2>
+            )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {createdLessons.map((lesson) => (
               <LessonCard

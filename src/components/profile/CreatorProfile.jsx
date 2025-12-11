@@ -7,12 +7,13 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from './../../hooks/useAxiosSecure';
 const CreatorProfile = () => {
   const { user } = useAuth();
-  const { email } = useParams(); // route e email pass করতে হবে
+  const { email } = useParams(); 
   const { creator = {}, creatorRefetch } = useCreator(email);
   const axiosInstance= useAxiosSecure()
   const createdLessons = creator.myLesson || [];
   const savedLessons = creator.favorites || [];
 
+  console.log(creator)
 
     const { data: lessons = [], refetch:LessonRefetch, error } = useQuery({
         queryKey: ["myLessons", user?.email],
@@ -32,7 +33,7 @@ const CreatorProfile = () => {
         {/* Cover Image Section */}
         <div className="relative">
           <img
-            src={coverImg}
+            src={creator?.coverPhoto || coverImg}
             alt="Cover"
             className="w-full h-60 object-cover"
           />
@@ -40,8 +41,8 @@ const CreatorProfile = () => {
           {/* Profile Avatar */}
           <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
             <img
-              src={creator.imageURL}
-              alt={creator.name || "Creator"}
+              src={creator?.imageURL}
+              alt={creator?.name || "Creator"}
               className="h-32 w-32 rounded-full object-cover ring-4 ring-base-100 shadow-xl"
             />
           </div>
@@ -50,15 +51,15 @@ const CreatorProfile = () => {
         {/* Creator Info */}
         <div className="mt-20 text-center px-6 pb-10">
           <h2 className="text-3xl font-bold text-base-content flex items-center justify-center gap-2">
-            {creator.name || "Unknown Creator"}
-            {creator.isPremium && (
+            {creator?.name || "Unknown Creator"}
+            {creator?.isPremium && (
               <span className="px-2 py-1 text-xs bg-yellow-100 text-yellow-900 rounded-md font-bold border border-amber-600">
                 ⭐ Premium
               </span>
             )}
           </h2>
 
-          <p className="text-sm text-base-content/60 mt-1">{creator.email}</p>
+          <p className="text-sm text-base-content/60 mt-1">{creator?.email}</p>
 
           {/* Stats */}
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">

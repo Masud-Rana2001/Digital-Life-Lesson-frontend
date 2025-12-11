@@ -11,7 +11,7 @@ export default function AddLesson() {
  
   const axiosInstance = useAxiosSecure();
   const navigate = useNavigate();
-
+  const viewsCount = Math.round(Math.random() * 10000);
   const {
     register,
     handleSubmit,
@@ -39,9 +39,11 @@ export default function AddLesson() {
       likesCount:0,
       favorites: [],
       favoritedCount:0,
-      views: 0,
+      views: viewsCount,
       comments: [],
-      commentsCount : 0,
+      commentsCount: 0,
+      reportCount: 0,
+      reports:[],
       isFeatured : false,
       createdAt: new Date(),
       updatedAt: new Date(),
