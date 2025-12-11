@@ -42,7 +42,7 @@ export default function AddLesson() {
       views: 0,
       comments: [],
       commentsCount : 0,
-      isFeatured : true,
+      isFeatured : false,
       createdAt: new Date(),
       updatedAt: new Date(),
     };

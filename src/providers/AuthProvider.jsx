@@ -46,6 +46,25 @@ const AuthProvider = ({ children }) => {
     })
   }
 
+
+    const refreshUser = async () => {
+    setUser({ ...auth.currentUser });
+    };
+
+  //   const profileUpdater = async (name,photo) => {
+  //    try {
+
+  //     await updateProfile(auth.currentUser, {
+  //       displayName: name || user.displayName,
+  //       photoURL: photo || user.photoURL,
+  //     });
+  //     refreshUser()
+  //     toast.success("Profile updated successfully 🌿");
+  //   } catch (error) {
+  //     toast.error(`Failed to update profile ❌,${error.message}`);
+  //   }
+  // };
+
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async currentUser => {
@@ -68,6 +87,7 @@ const AuthProvider = ({ children }) => {
     signInWithGoogle,
     logOut,
     updateUserProfile,
+    refreshUser
   }
 
   return (

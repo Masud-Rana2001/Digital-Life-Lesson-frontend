@@ -18,7 +18,7 @@ import useRole from './../hooks/useRole';
 export default function DashboardLayout() {
   const {role} = useRole()
   const [open, setOpen] = useState(false);
-
+  console.log(role)
   return (
     <div className="w-full bg-gradient-radial from-white via-[#f5f0ff] to-[#dbe7ff] 
         bg-[radial-gradient(circle_at_70%_40%,#e6d7ff_0%,#f6f2ff_35%,#e4f0ff_70%,#ffffff_100%)] 
@@ -55,26 +55,58 @@ export default function DashboardLayout() {
               }
             />
               {
-                role === "user"(
-                  
+                role === "user" &&(
+                  <>
                   <NavItem
                     to="/dashboard/my-lessons"
                     label="My Lessons"
                     icon={<FaBook className="size-5" />}
                   />
+                  <NavItem
+                    to="/dashboard/add-lesson"
+                    label="Add Lesson"
+                    icon={<CiBookmarkPlus className="size-5" />}
+                  />
+                  <NavItem
+                    to="/dashboard/favorite-lessons"
+                    label="Favorite Lessons"
+                    icon={<MdFavorite  className="size-5" />}
+                  />
+                  <NavItem
+                    to="/dashboard/profile"
+                    label="My Profile"
+                    icon={<MdFavorite  className="size-5" />}
+                  />
+                  </>
+                )
+          }
+              {
+                role === "admin" &&(
+                  <>
+                  <NavItem
+                    to="/dashboard/my-lessons"
+                    label="Manage Users"
+                    icon={<FaBook className="size-5" />}
+                  />
+                  <NavItem
+                    to="/dashboard/manage-lessons"
+                    label="Manage Lessons"
+                    icon={<CiBookmarkPlus className="size-5" />}
+                  />
+                  <NavItem
+                    to="/dashboard/favorite-lessons"
+                    label="Reported Lessons"
+                    icon={<MdFavorite  className="size-5" />}
+                  />
+                  <NavItem
+                    to="/dashboard/profile"
+                    label="Admin Profile"
+                    icon={<MdFavorite  className="size-5" />}
+                  />
+                  </>
                 )
           }
   
-            <NavItem
-              to="/dashboard/add-lesson"
-              label="Add Lesson"
-              icon={<CiBookmarkPlus className="size-5" />}
-            />
-            <NavItem
-              to="/dashboard/favorite-lessons"
-              label="Favorite Lessons"
-              icon={<MdFavorite  className="size-5" />}
-            />
   
             <hr className="border-base-300 my-4" />
   
@@ -114,11 +146,24 @@ export default function DashboardLayout() {
   
             <ul className="menu space-y-2">
               
-              <NavItem to="/dashboard" label="Home" icon="🏠" />
-              <NavItem to="/dashboard/my-lessons" label="My Lessons" icon="📚" />
-              <NavItem to="/dashboard/add-lesson" label="Add Lesson" icon="➕" />
-              <NavItem to="/dashboard/favorite-lessons" label="Favorite Lessons" icon="💖" />
-              <hr className="border-base-300" />
+                <NavItem to="/dashboard" label="Home" icon="🏠" />
+                {role === "user" && (
+                  <>
+                    <NavItem to="/dashboard/my-lessons" label="My Lessons" icon="📚" />
+                    <NavItem to="/dashboard/add-lesson" label="Add Lesson" icon="➕" />
+                    <NavItem to="/dashboard/favorite-lessons" label="Favorite Lessons" icon="💖" />
+                    <NavItem to="/dashboard/profile" label="My Profile" icon="💖" />
+                  </>
+            )}
+                {role === "admin" && (
+                  <>
+                    <NavItem to="/dashboard/my-lessons" label="Manage Users" icon="👤" />
+                    <NavItem to="/dashboard/add-lesson" label="Manage Lessons" icon="📚" />
+                    <NavItem to="/dashboard/favorite-lessons" label="Reported Lessons" icon="📕" />
+                    <NavItem to="/dashboard/profile" label="Admin Profile" icon="📕" />
+                  </>
+            )}
+            <hr className="border-base-300" />
               <NavItem to="/dashboard/settings" label="Settings" icon="⚙️" />
   
             </ul>

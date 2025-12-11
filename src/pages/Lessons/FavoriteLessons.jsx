@@ -126,7 +126,7 @@ function FavoriteLessons() {
                 <dialog ref={updaterFormRef} className="modal">
                 <div className="modal-box w-11/12 max-w-4xl p-2">
                   <UpdateLessonForm
-                    lesson={selectedLesson}
+                    lesson={lesson}
                     updaterFormRef={updaterFormRef}
                     refetchFn={myLessonRefetch}
                   />

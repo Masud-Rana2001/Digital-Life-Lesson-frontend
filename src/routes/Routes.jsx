@@ -24,6 +24,7 @@ import PublicLessons from '../pages/Lessons/PublicLessons'
 import Profile from '../components/profile/Profile'
 import FavoriteLessons from '../pages/Lessons/FavoriteLessons'
 import CreatorProfile from '../components/profile/CreatorProfile'
+import ManageLessons from '../pages/Dashboard/Admin/ManageLessons'
 
 
 export const router = createBrowserRouter([
@@ -105,6 +106,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ManageUsers />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'manage-lessons',
+        element: (
+          <PrivateRoute>
+            <ManageLessons />
           </PrivateRoute>
         ),
       },

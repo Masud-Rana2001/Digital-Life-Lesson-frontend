@@ -33,6 +33,10 @@ export const imageUploadCloudinary = async imageData => {
 
 
 export const saveOrUpdate = async userData => {
-  const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/user`, userData);
+  const allData = {
+    ...userData,
+    coverPhoto : "/cover.png"
+  }
+  const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/user`, allData);
   return data;
 }
