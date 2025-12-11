@@ -40,11 +40,15 @@ export default function LessonDetailsPage() {
   },
 });
 
- 
+   const isMyLesson = user?.email && lesson?.creator?.email
+  ? user.email === lesson.creator.email
+    : false;
+  
+  
   if (isLoading) return<LoadingSpinner/>
   if (error) return <div className="text-error text-center py-20">Error loading lesson.</div>;
 
-  const restricted = lesson.accessLevel === "Premium" && !user?.isPremium;
+  const restricted = !isMyLesson && lesson.accessLevel === "Premium" && !user?.isPremium;
 
   // If locked
   if (restricted) return <LessonPremiumLock />;
@@ -71,6 +75,7 @@ export default function LessonDetailsPage() {
           lesson={lesson}
           user={user}
           refetchFn={refetchDetails}
+          isMyLesson={ isMyLesson}
         />
 
         <LessonCreatorCard

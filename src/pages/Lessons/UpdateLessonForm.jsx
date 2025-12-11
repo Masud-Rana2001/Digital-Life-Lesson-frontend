@@ -9,8 +9,8 @@ import { imageUpload } from './../../utils/index';
 
 
 export default function UpdateLessonForm({ lesson ,updaterFormRef,refetchFn}) {
-    
     const lessonId = lesson?._id; 
+    
     
     const axiosInstance = useAxiosSecure();
     const navigate = useNavigate();
@@ -24,11 +24,11 @@ export default function UpdateLessonForm({ lesson ,updaterFormRef,refetchFn}) {
     } = useForm({
         defaultValues: {
             title: lesson.title,
-            description: lesson.description,
-            category: lesson.category,
-            emotionalTone: lesson.emotionalTone,
-            accessLevel: lesson.accessLevel,
-            visibility: lesson.visibility,
+            description: lesson?.description,
+            category: lesson?.category,
+            emotionalTone: lesson?.emotionalTone,
+            accessLevel: lesson?.accessLevel,
+            visibility: lesson?.visibility,
         },
     });
 
@@ -37,8 +37,8 @@ export default function UpdateLessonForm({ lesson ,updaterFormRef,refetchFn}) {
 
   const onSubmit = async (data) => {
        
-        let imageUrl = lesson.image;
-        console.log(imageUrl)
+        let imageUrl = lesson?.image;
+        
         if (data.image && data.image.length > 0) {
             Swal.fire({
                 title: "Uploading Image...",
@@ -78,7 +78,7 @@ export default function UpdateLessonForm({ lesson ,updaterFormRef,refetchFn}) {
                 });
                 refetchFn()
                 updaterFormRef.current.close()
-                navigate("/dashboard/my-lessons");
+               
             } else {
                  Swal.fire({
                     title: "No Changes",
@@ -125,7 +125,7 @@ export default function UpdateLessonForm({ lesson ,updaterFormRef,refetchFn}) {
                         Current Featured Image
                     </label>
                     <img 
-                        src={lesson.image} 
+                        src={lesson?.image} 
                         alt="Current Lesson" 
                         className=" object-cover rounded-xl shadow-md border-2 border-cyan-400"
                     />

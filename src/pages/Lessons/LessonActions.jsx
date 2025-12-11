@@ -17,7 +17,7 @@ import UpdateLessonForm from './UpdateLessonForm';
 import useAxiosSecure from './../../hooks/useAxiosSecure';
 import  Swal  from 'sweetalert2';
 
-export default function LessonActions({ user, lesson, refetchFn }) {
+export default function LessonActions({ user, lesson, refetchFn ,isMyLesson}) {
    const navigate = useNavigate();
   const axiosInstance = useAxiosSecure()
   const updaterFormRef = useRef(null)
@@ -99,18 +99,25 @@ export default function LessonActions({ user, lesson, refetchFn }) {
         <ShareIcon className="w-5 h-5" /> Share
        
       </button>
-      <button
+     
+
+      {
+        
+        isMyLesson && <>
+         <button
         onClick={() => updaterFormRef.current.showModal()}
         className="btn btn-lg btn-outline  gap-2 flex items-center">
          <FaRegEdit className="inline-block mr-1" /> Edit
        
-      </button>
-      <button
+          </button>
+           <button
         onClick={handleDeleteLesson}
         className="btn btn-lg btn-outline btn-error gap-2 flex items-center">
          <RiDeleteBin5Fill className="inline-block mr-1" /> Delete
        
       </button>
+      </>
+      }
       {
         shareModalOpen && (
           <ShareModal
@@ -131,7 +138,7 @@ export default function LessonActions({ user, lesson, refetchFn }) {
       }
       <dialog ref={updaterFormRef}  className="modal">
                   <div className="modal-box w-11/12 max-w-5xl p-1">
-   const refetchFn =
+   
                     <UpdateLessonForm
                       lesson={lesson}
                       updaterFormRef={updaterFormRef}

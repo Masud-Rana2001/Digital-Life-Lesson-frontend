@@ -1,15 +1,13 @@
-import {useState} from 'react';
-import { RiDeleteBin5Fill } from "react-icons/ri";
-import { FaRegEdit } from "react-icons/fa";
+import { ShareIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon, LockClosedIcon, StarIcon } from "@heroicons/react/24/solid";
+import { useState } from 'react';
 import { Link } from "react-router";
-import { LockClosedIcon, StarIcon,HeartIcon,BookmarkIcon } from "@heroicons/react/24/solid";
-import {  ShareIcon  } from "@heroicons/react/24/outline";
 
-
+import { MdInfoOutline } from "react-icons/md";
 import useLikeLesson from '../../hooks/useLikeLesson';
 import useSaveLesson from '../../hooks/useSaveLesson';
-import ShareModal from './ShareComponent/ShareModal';
 import OptionBtn from './ShareComponent/OptionBtn';
+import ShareModal from './ShareComponent/ShareModal';
 
 export default function LessonCard({
   lesson,
@@ -102,28 +100,33 @@ export default function LessonCard({
           </div>
         </div>
        
-        <div className="flex">
-          
-        <Link
-          to={`/dashboard/my-lessons/${_id}`}
-          className={`
-            text-sm font-semibold px-3 py-1 rounded-md
-            ${restricted
-              ? "text-base-content/40 cursor-not-allowed"
-              : "text-primary hover:text-primary-focus"}
-              `}
-              >
-          {restricted ? "Locked" : "Details"}
-        </Link>
-          <OptionBtn
-            lessonId = {_id}
-            isMyLesson={isMyLesson}
-            setShowOptions={setShowOptions}
-            showOptions={showOptions}
-            refetchFn={refetchFn}
-            lesson={lesson}
-          />
-          </div>
+<div className="flex items-center gap-2">
+
+  {/* Show Details button ONLY if it is not my lesson */}
+  {!isMyLesson && (
+    <Link
+      to={`/dashboard/my-lessons/${lesson._id}`}
+      className={`px-3 flex justify-center items-center py-1 text-xs btn  btn-outline transition btn-sm btn-secondary
+        ${restricted ? "pointer-events-none opacity-50" : ""}
+      `}
+    > <MdInfoOutline className="inline-block"/>
+      {restricted ? "Locked" : "Details"}
+    </Link>
+  )}
+
+  {/* My Lesson Dropdown */}
+  <OptionBtn
+    restricted={restricted}
+    lessonId={_id}
+    isMyLesson={isMyLesson}
+    setShowOptions={setShowOptions}
+    showOptions={showOptions}
+    refetchFn={refetchFn}
+    lesson={lesson}
+  />
+
+</div>
+
       </div>
 
       {/* Image Section */}

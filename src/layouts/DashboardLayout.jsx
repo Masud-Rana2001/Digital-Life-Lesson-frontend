@@ -12,9 +12,11 @@ import { MdFavorite } from "react-icons/md";
 import Logo from "../components/Shared/Logo";
 import Container from "../components/Shared/Container";
 import NavItem from "../components/Shared/NavItem";
+import useRole from './../hooks/useRole';
 
 
 export default function DashboardLayout() {
+  const {role} = useRole()
   const [open, setOpen] = useState(false);
 
   return (
@@ -52,12 +54,16 @@ export default function DashboardLayout() {
                <FaHome className="size-5"/>
               }
             />
-  
-            <NavItem
-              to="/dashboard/my-lessons"
-              label="My Lessons"
-              icon={<FaBook className="size-5" />}
-            />
+              {
+                role === "user"(
+                  
+                  <NavItem
+                    to="/dashboard/my-lessons"
+                    label="My Lessons"
+                    icon={<FaBook className="size-5" />}
+                  />
+                )
+          }
   
             <NavItem
               to="/dashboard/add-lesson"

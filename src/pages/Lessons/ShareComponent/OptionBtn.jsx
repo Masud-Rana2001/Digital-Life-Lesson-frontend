@@ -7,111 +7,108 @@ import Swal from 'sweetalert2'
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from './../../../hooks/useAxiosSecure';
 import UpdateLessonForm from '../UpdateLessonForm';
+import { MdInfoOutline } from "react-icons/md";
 
-
-function OptionBtn({ isMyLesson, setShowOptions, showOptions, lessonId, refetchFn,lesson }) {
-  
-  const axiosInstance = useAxiosSecure()
+function OptionBtn({ isMyLesson, setShowOptions, showOptions, lessonId, refetchFn, lesson, restricted }) {
+  const axiosInstance = useAxiosSecure();
   const menuRef = useRef(null);
-  const updaterFormRef = useRef(null)
+  const updaterFormRef = useRef(null);
+
   useEffect(() => {
     function handleClickOutside(e) {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setShowOptions(false)
+        setShowOptions(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-    return ()=> document.removeEventListener("mousedown",handleClickOutside)
-  }, [setShowOptions])
-  
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [setShowOptions]);
 
-
-  const handleDeleteLesson =async () => {
-    const result = await
-      Swal.fire({
-  title: "Are you sure to delete the lesson ?",
-  text: "You won't be able to revert this!",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "Yes, delete it!"
-   });
-    
-    if (result.isConfirmed) {
-      const res = await axiosInstance.delete(`/lessons/${lessonId}`);
-      console.log(res)
-      Swal.fire({
-      title: "Deleted!",
-      text: "Your file has been deleted.",
-      icon: "success"
+  const handleDeleteLesson = async () => {
+    const result = await Swal.fire({
+      title: "Are you sure to delete the lesson?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     });
+
+    if (result.isConfirmed) {
+      await axiosInstance.delete(`/lessons/${lessonId}`);
+
+      Swal.fire({
+        title: "Deleted!",
+        text: "Lesson deleted successfully.",
+        icon: "success",
+      });
+
+      refetchFn();
     }
-    refetchFn()
-    
-    
   };
 
-
   return (
-    <div>
-      {
-  isMyLesson && (
     <div className="relative">
-      <button
-        onClick={() => setShowOptions(!showOptions)}
-        className="btn btn-sm"
-      >
-        <CiMenuKebab />
-      </button>
-
-      {showOptions && (
-        <div
-          ref={menuRef}
-          className="
-            absolute right-0 mt-2 w-32 
-            bg-base-100 shadow-lg border border-base-300 
-            rounded-lg overflow-hidden z-50
-          "
-        >
+      {isMyLesson && (
+        <>
+          {/* Menu Button */}
           <button
-            onClick={() => updaterFormRef.current.showModal()}
-            className="
-              w-full text-left px-4 py-2 text-sm 
-              hover:bg-warning hover:text-white transition
-            "
+            onClick={() => setShowOptions(!showOptions)}
+            className="btn btn-sm border-0 btn-outline text-xl btn-secondary"
           >
-            <FaRegEdit className="inline-block mr-1" /> Edit
+            <CiMenuKebab />
           </button>
 
-          <button
-            onClick={handleDeleteLesson}
-            className="
-              w-full text-left px-4 py-2 text-sm 
-              hover:bg-error hover:text-white transition
-            "
-          >
-            <RiDeleteBin5Fill className="inline-block mr-1" /> Delete
-                </button>
-                
-                 <dialog ref={updaterFormRef}  className="modal">
-                  <div className="modal-box w-11/12 max-w-5xl p-1">
-   const refetchFn =
-                    <UpdateLessonForm
-                      lesson={lesson}
-                      updaterFormRef={updaterFormRef}
-                      refetchFn={ refetchFn}
-                    />
-                  </div>
-                </dialog>
-        </div>
+          {/* Dropdown */}
+          {showOptions && (
+            <div
+              ref={menuRef}
+              className="absolute right-0 mt-2 w-36 bg-base-100 shadow-xl border border-base-300 rounded-lg z-50"
+            >
+              {/* Details */}
+              <Link
+                to={`/dashboard/my-lessons/${lesson._id}`}
+                className={`block px-4 py-2 text-sm hover:bg-info transition hover:text-white ${
+                  restricted ? "text-base-content/40 cursor-not-allowed" : "text-base-content"
+                }`}
+              >
+                {!restricted && <MdInfoOutline className="inline-block mr-1"/>}
+                {restricted ? "Locked" : ` Details`}
+              </Link>
+
+              {/* Edit */}
+              <button
+                onClick={() => updaterFormRef.current.showModal()}
+                className="w-full text-left px-4 py-2 text-sm hover:bg-warning hover:text-white transition"
+              >
+                <FaRegEdit className="inline-block mr-1" /> Edit
+              </button>
+
+              {/* Delete */}
+              <button
+                onClick={handleDeleteLesson}
+                className="w-full text-left px-4 py-2 text-sm hover:bg-error hover:text-white transition"
+              >
+                <RiDeleteBin5Fill className="inline-block mr-1" /> Delete
+              </button>
+
+              {/* Dialog */}
+              <dialog ref={updaterFormRef} className="modal">
+                <div className="modal-box w-11/12 max-w-4xl p-2">
+                  <UpdateLessonForm
+                    lesson={lesson}
+                    updaterFormRef={updaterFormRef}
+                    refetchFn={refetchFn}
+                  />
+                </div>
+              </dialog>
+            </div>
+          )}
+        </>
       )}
     </div>
-  )
+  );
 }
 
-    </div>
-  )
-}
-
-export default OptionBtn
+export default OptionBtn;
