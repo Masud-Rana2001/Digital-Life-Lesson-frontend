@@ -1,26 +1,45 @@
-
-
+import { FaBook, FaHome, FaUserTie } from "react-icons/fa";
+import { RiLogoutCircleLine } from "react-icons/ri";
 import Logo from "../components/Shared/Logo";
 import NavItem from "../components/Shared/NavItem";
+import useAuth from "../hooks/useAuth";
+import { toast } from "react-hot-toast";
 
 export default function Sidebar({ role, dashboardNavItems, onClose }) {
+  const { logOut } = useAuth();
+
+  // Common navigation items
+  const commonNav = [
+    {
+      to: "/dashboard",
+      label: "Home",
+      icon: <FaHome className="size-5" />,
+    },
+    {
+      to: "/dashboard/profile",
+      label: role === "user" ? "My Profile" : "Admin Profile",
+      icon: <FaUserTie className="size-5" />,
+    },
+  ];
+
   return (
     <aside
       className={`
         flex flex-col p-5 
         border-r border-base-300 shadow-xl 
         bg-base-100/80 backdrop-blur-md
-        ${onClose 
-          ? "fixed top-0 left-0 z-40 w-64 h-full" 
-          : "hidden lg:flex lg:fixed lg:top-0 lg:left-0 lg:h-screen w-64"
-        }
+        ${onClose
+          ? "fixed top-0 left-0 z-40 w-64 h-full"
+          : "hidden lg:flex lg:fixed lg:top-0 lg:left-0 lg:h-screen w-64"}
       `}
     >
-      {/* Logo row */}
+      {/* Logo Row */}
       {onClose ? (
         <div className="flex justify-between items-center mb-5">
           <Logo />
-          <button className="btn btn-ghost" onClick={onClose}>✖</button>
+          <button className="btn btn-ghost" onClick={onClose}>
+            ✖
+          </button>
         </div>
       ) : (
         <div className="flex items-center gap-2 mb-5 pl-2">
@@ -32,19 +51,12 @@ export default function Sidebar({ role, dashboardNavItems, onClose }) {
 
       <ul className="menu flex-1 space-y-1">
         {/* Common Nav */}
-        {[
-          { to: "/dashboard", label: "Home", icon: "FaHome" },
-          {
-            to: "/dashboard/profile",
-            label: role === "user" ? "My Profile" : "Admin Profile",
-            icon: "FaUserTie",
-          },
-          { to: "/dashboard/settings", label: "Settings", icon: "MdSettings" },
-        ].map(({ to, label }) => (
+        {commonNav.map(({ to, label, icon }) => (
           <NavItem
             key={to}
             to={to}
             label={label}
+            icon={icon}
             onClick={onClose}
           />
         ))}
@@ -61,6 +73,21 @@ export default function Sidebar({ role, dashboardNavItems, onClose }) {
             onClick={onClose}
           />
         ))}
+
+        <hr className="border-base-400 my-4" />
+
+        {/* Logout */}
+        <li>
+          <button
+            onClick={() => {
+              logOut();
+              toast.success("Logout successful");
+            }}
+            className="flex gap-2 items-center text-base"
+          >
+            <RiLogoutCircleLine className="size-5" /> Logout
+          </button>
+        </li>
       </ul>
     </aside>
   );

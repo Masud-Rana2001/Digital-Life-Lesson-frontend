@@ -57,29 +57,54 @@ export default function Banner() {
         pagination={{ clickable: true }}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         loop
-        className="min-h-[530px]  rounded-2xl shadow overflow-hidden  bg-gradient-to-br from-sky-50 via-cyan-50 to-sky-50  transition-all duration-300"
+        className="
+          min-h-[550px] relative  overflow-hidden rounded-3xl shadow
+
+          /* Light Blue Gradient Background */
+          bg-[radial-gradient(circle_at_20%_20%,#d0f0ff88,transparent_60%),
+             radial-gradient(circle_at_80%_80%,#a0e0ff77,transparent_70%),
+             radial-gradient(circle_at_50%_100%,#b0e8ff55,transparent_80%),
+             linear-gradient(to_br,#e0f7ff,#bbf0ff)]
+        "
       >
+
+        {/* Light Beams */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-sky-300/20 blur-3xl rounded-full"></div>
+          <div className="absolute bottom-0 left-1/3 w-[420px] h-[420px] bg-blue-300/15 blur-3xl rounded-full"></div>
+          <div className="absolute top-1/2 right-10 w-[350px] h-[350px] bg-cyan-300/15 blur-2xl rounded-full"></div>
+        </div>
+
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <div className="flex items-center justify-center min-h-[530px] py-20">
+            <div className="flex items-center justify-center min-h-[550px] py-20 px-4 relative z-10 ">
               <motion.div
                 initial="hidden"
                 animate="visible"
                 variants={contentVariants}
-                className="container mx-auto px-6 max-w-4xl text-center"
+                className="w-full max-w-4xl text-center"
               >
-                <div className="bg-white  backdrop-blur-xl shadow-md p-10 md:p-16 rounded-2xl border border-white/30 dark:border-white/10">
-                  <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-primary dark:text-accent leading-tight">
+                {/* Glass Card */}
+                <div className="
+                   bg-sky-900/20       
+                    backdrop-blur-3xl
+                    shadow-2xl shadow-sky-300/30  
+                    border border-white/30
+                    p-10 md:p-16
+                    rounded-3xl 
+                    transition-all duration-300
+                ">
+                  <h2 className="text-3xl md:text-5xl font-extrabold mb-6 leading-tight text-gray-900">
                     {slide.title}
                   </h2>
 
-                  <p className="text-lg md:text-xl max-w-3xl mx-auto mb-10 text-base-content/80 dark:text-base-content/70">
+                  <p className="text-lg md:text-xl text-gray-700 mb-10 max-w-3xl mx-auto">
                     {slide.subtitle}
                   </p>
 
                   <Link
                     to={slide.route}
-                    className={`btn ${slide.buttonClass} btn-lg font-semibold px-10`}
+                    className={`btn ${slide.buttonClass} btn-lg font-semibold px-10 transition duration-300 hover:scale-[1.02]`}
                   >
                     {slide.buttonText}
                   </Link>

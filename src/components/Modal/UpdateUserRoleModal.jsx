@@ -1,64 +1,98 @@
-import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
-import { useState } from 'react'
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { useState, useEffect } from "react";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
-const UpdateUserRoleModal = ({ isOpen, closeModal, role }) => {
-  const [updatedRole, setUpdatedRole] = useState(role)
+const UpdateUserRoleModal = ({ isOpen, closeModal, user, refetch }) => {
+  const [updatedRole, setUpdatedRole] = useState(user?.role || "user");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const axiosSecure = useAxiosSecure();
+
+  useEffect(() => {
+    setUpdatedRole(user.role);
+  }, [user]);
+
+  const handleUpdateRole = async (e) => {
+    e.preventDefault();
+
+    if (updatedRole === user.role) {
+      toast.success("Role already up-to-date.");
+      closeModal();
+      return;
+    }
+
+    setIsSubmitting(true);
+    const toastId = toast.loading("Updating role...");
+
+    try {
+      const res = await axiosSecure.patch(
+        `/update-user-role/${user.email}?role=${updatedRole}`
+      );
+
+      if (res.data.modifiedCount > 0) {
+        toast.success("Role updated successfully!", { id: toastId });
+        refetch();
+        closeModal();
+      } else {
+        toast.error("No change made.", { id: toastId });
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Error updating role.", {
+        id: toastId,
+      });
+    }
+
+    setIsSubmitting(false);
+  };
 
   return (
-    <>
-      <Dialog
-        open={isOpen}
-        as='div'
-        className='relative z-10 focus:outline-none'
-        onClose={closeModal}
-      >
-        <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
-          <div className='flex min-h-full items-center justify-center p-4'>
-            <DialogPanel
-              transition
-              className='w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 shadow-xl'
+    <Dialog open={isOpen} onClose={closeModal} className="relative z-50">
+      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" />
+
+      <div className="fixed inset-0 flex items-center justify-center p-4">
+        <DialogPanel className="bg-white rounded-xl p-6 shadow-xl max-w-md w-full">
+          <DialogTitle className="text-xl font-semibold border-b pb-2 mb-4">
+            Update Role:
+            <span className="text-blue-600 font-bold ml-1">{user.email}</span>
+          </DialogTitle>
+
+          <form onSubmit={handleUpdateRole}>
+            <label className="text-sm font-medium text-gray-700 mb-2 block">
+              Current Role:
+              <span className="font-bold ml-1">{user.role}</span>
+            </label>
+
+            <select
+              value={updatedRole}
+              onChange={(e) => setUpdatedRole(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:ring-blue-500"
             >
-              <DialogTitle
-                as='h3'
-                className='text-base/7 font-medium text-black'
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+
+            <div className="flex justify-end gap-3">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
               >
-                Update User Role
-              </DialogTitle>
-              <form>
-                <div>
-                  <select
-                    value={updatedRole}
-                    onChange={e => setUpdatedRole(e.target.value)}
-                    className='w-full my-3 border border-gray-200 rounded-xl px-2 py-3'
-                    name='role'
-                    id=''
-                  >
-                    <option value='customer'>Customer</option>
-                    <option value='seller'>Seller</option>
-                    <option value='admin'>Admin</option>
-                  </select>
-                </div>
-                <div className='flex mt-2 justify-around'>
-                  <button
-                    type='button'
-                    className='cursor-pointer inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2'
-                  >
-                    Update
-                  </button>
-                  <button
-                    type='button'
-                    className='cursor-pointer inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
-                    onClick={closeModal}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </DialogPanel>
-          </div>
-        </div>
-      </Dialog>
-    </>
-  )
-}
-export default UpdateUserRoleModal
+                {isSubmitting ? "Updating..." : "Update Role"}
+              </button>
+
+              <button
+                type="button"
+                onClick={closeModal}
+                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </DialogPanel>
+      </div>
+    </Dialog>
+  );
+};
+
+export default UpdateUserRoleModal;

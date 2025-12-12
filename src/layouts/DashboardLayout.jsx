@@ -13,16 +13,7 @@ import useRole from "../hooks/useRole";
 import LoadingSpinner from "../components/Shared/LoadingSpinner";
 import Sidebar from "./Sidebar";
 
-// Common
-const commonNavItems = (role) => [
-  { to: "/dashboard", label: "Home", icon: FaHome },
-  {
-    to: "/dashboard/profile",
-    label: role === "user" ? "My Profile" : "Admin Profile",
-    icon: FaUserTie,
-  },
-  { to: "/dashboard/settings", label: "Settings", icon: MdSettings },
-];
+
 
 // User Nav
 const userNavItems = [
@@ -48,7 +39,10 @@ export default function DashboardLayout() {
   let dashboardNavItems = role === "admin" ? adminNavItems : userNavItems;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    
+    <div className="min-h-screen bg-gradient-radial from-white via-[#f5f0ff] to-[#dbe7ff] 
+      bg-[radial-gradient(circle_at_70%_40%,#e6d7ff_0%,#f6f2ff_35%,#e4f0ff_70%,#ffffff_100%)] 
+      bg-no-repeat bg-cover ">
       <Container>
         <div className="flex min-h-screen">
 

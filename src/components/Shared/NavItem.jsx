@@ -6,6 +6,7 @@ export default function NavItem({ to, icon, label }) {
   return (
     <li className="mt-1">
       <NavLink
+       
         to={to}
         className={({ isActive }) =>
           `
