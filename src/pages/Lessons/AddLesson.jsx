@@ -1,3 +1,5 @@
+
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
@@ -5,10 +7,14 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from './../../hooks/useAuth';
 import { imageUpload } from "../../utils";
+import SuccessAnimation from "./ShareComponent/SuccessAnimation";
+
 
 export default function AddLesson() {
   const { user } = useAuth();
- 
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const ANIMATION_DURATION_MS = 1500;
   const axiosInstance = useAxiosSecure();
   const navigate = useNavigate();
   const viewsCount = Math.round(Math.random() * 10000);
@@ -52,13 +58,13 @@ export default function AddLesson() {
     const result = await axiosInstance.post("/lessons", newLesson);
     console.log(result)
     if (result.data.insertedId) {
-        Swal.fire({
-          title: "Lesson Added",
-          text: "Your life lesson is now saved.",
-          icon: "success",
-        });
-        reset();
+      setShowSuccess(true)
+      reset();
+      
+      setTimeout(() => {
+        setShowSuccess(false);
         navigate("/dashboard/my-lessons");
+      },ANIMATION_DURATION_MS)
       }
      
   };
@@ -66,13 +72,15 @@ export default function AddLesson() {
   return (
     <div
       className="
-      min-h-screen
+      min-h-[400px]
       max-w-5xl mx-auto mt-14 p-10 
       rounded-3xl shadow-xl
       bg-gradient-to-br from-sky-50 via-cyan-50 to-sky-50
       backdrop-blur-xl border border-white/60
     "
-    >
+    >{showSuccess && (
+  <SuccessAnimation message="Lesson Added Successfully 🎉" />
+)}
       {/* HEADING */}
       <h1
         className="
