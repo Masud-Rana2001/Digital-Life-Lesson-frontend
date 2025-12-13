@@ -55,16 +55,13 @@ console.log(favLessons)
         "SI No",  "Title", "Category", "Tone", "Access Level", "Visibility"
       ];
     // data map 
-    const tableRow = favLessons.map((order, index) =>[
+    const tableRow = favLessons.map((lesson, index) =>[
       index + 1,
-      
-      order.name,
-      order.title,
-     
-      order.category,
-      order.emotionalTone,
-      order.accessLevel,
-     order.visibility
+      lesson.title,
+      lesson.category,
+      lesson.emotionalTone,
+      lesson.accessLevel,
+     lesson.visibility
     ])
 
     //ganarate table 
@@ -115,13 +112,7 @@ console.log(favLessons)
   };
 
 
-//     const handleOpenUpdate = (lesson) => {
-//        setSelectedLesson(lesson);
-      
-//   updaterFormRef.current.showModal();
-// };
 
-  
 
 
 
@@ -132,11 +123,15 @@ console.log(favLessons)
 
   return (
     <div className="max-w-6xl min-h-screen mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold mb-6">📚 My Favorite Lessons</h1>
+      <div className="flex justify-between">
+
+      <h1 className="text-3xl font-bold mb-6 text-primary">📚 My Favorite Lessons</h1>
      <button
             type="button"
             onClick={handleDownloadPdf}
-            className="btn btn-primary text-gray-100">Download Report ⬇️</button>
+        className="btn btn-primary btn-outline  rounded-full">Download Report ⬇️
+      </button>
+      </div>
       {favLessons.length === 0 && (
         <p className="text-gray-600 text-center py-10">You haven't created any lessons yet.</p>
       )}
@@ -161,7 +156,7 @@ console.log(favLessons)
               
                <th>{index + 1}</th>
               <td>
-                <img className="min-w-40 max-h-20" src={lesson?.image } alt="" />
+                <img className="min-w-20 max-h-20 rounded-3xl object-cover" src={lesson?.image } alt="" />
                </td>
                <td className="font-medium">{lesson?.title }</td>
                <td>{lesson?.category }</td>
