@@ -101,58 +101,76 @@ function ManageReportedLessons() {
                     🎉 No reported lessons found. The community is clean!
                 </p>
             ) : (
-                <div className="overflow-x-auto bg-white rounded-xl shadow">
-                    <table className="table table-zebra w-full">
-                        <thead>
-                            <tr>
-                                <th>SI</th>
-                                <th>Lesson Title</th>
-                                <th className="text-center">Report Count</th>
-                                <th className="text-center">Details</th>
-                                <th className="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {reportedLessons.map((lesson, index) => (
-                                <tr key={lesson._id}>
-                                    <th>{index + 1}</th>
-                                    <td>
-                                        <div className="font-bold">{lesson.title}</div>
-                                        <div className="text-xs opacity-50">ID: {lesson._id}</div>
-                                    </td>
-                                    <td className="text-center">
-                                        <span className="badge badge-error text-white font-bold">
-                                            {lesson.reportCount}
-                                        </span>
-                                    </td>
-                                    <td className="text-center">
-                                        <button
-                                            onClick={() => handleShowReportDetails(lesson._id)}
-                                            className="btn btn-sm btn-info text-white"
-                                        >
-                                            <MdInfoOutline className="size-5" /> Details
-                                        </button>
-                                    </td>
-                                    <td className="flex flex-col gap-1 items-center">
-                                        <button
-                                            onClick={() => handleDeleteLesson(lesson._id)}
-                                            className="btn btn-xs btn-error text-white"
-                                        >
-                                            <RiDeleteBin5Fill /> Delete Lesson
-                                        </button>
-                                        
-                                        <button
-                                            onClick={() => handleIgnoreReports(lesson._id)}
-                                            className="btn btn-xs btn-outline btn-warning"
-                                        >
-                                            Ignore
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                <div className="relative -mx-4 md:mx-0 overflow-x-auto bg-white rounded-xl shadow">
+  <table className="table table-zebra min-w-[1000px] w-full">
+    <thead className="bg-gray-50">
+      <tr>
+        <th className="whitespace-nowrap">SI</th>
+        <th className="whitespace-nowrap">Lesson Title</th>
+        <th className="whitespace-nowrap text-center">Report Count</th>
+        <th className="whitespace-nowrap text-center">Details</th>
+        <th className="whitespace-nowrap text-center">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {reportedLessons.map((lesson, index) => (
+        <tr key={lesson._id}>
+          <th className="whitespace-nowrap">{index + 1}</th>
+
+          {/* Lesson Title */}
+          <td className="min-w-[320px]">
+            <p className="font-semibold truncate max-w-[280px]">
+              {lesson.title}
+            </p>
+            <p className="text-xs text-gray-400 truncate max-w-[280px]">
+              ID: {lesson._id}
+            </p>
+          </td>
+
+          {/* Report Count */}
+          <td className="min-w-[120px] text-center whitespace-nowrap">
+            <span className="badge badge-error text-white font-bold">
+              {lesson.reportCount}
+            </span>
+          </td>
+
+          {/* Details */}
+          <td className="min-w-[140px] text-center whitespace-nowrap">
+            <button
+              onClick={() => handleShowReportDetails(lesson._id)}
+              className="btn btn-sm btn-info text-white"
+            >
+              <MdInfoOutline className="size-5" />
+              <span className="hidden sm:inline ml-1">Details</span>
+            </button>
+          </td>
+
+          {/* Action */}
+          <td className="min-w-[170px] whitespace-nowrap">
+            <div className="flex flex-col gap-1 items-center">
+              <button
+                onClick={() => handleDeleteLesson(lesson._id)}
+                className="btn btn-xs btn-error text-white"
+              >
+                <RiDeleteBin5Fill />
+                <span className="hidden sm:inline ml-1">Delete</span>
+              </button>
+
+              <button
+                onClick={() => handleIgnoreReports(lesson._id)}
+                className="btn btn-xs btn-outline btn-warning"
+              >
+                Ignore
+              </button>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
         )}
         
 

@@ -190,72 +190,90 @@ function ManageLessons() {
       {/* --- 3. Lesson Table --- */}
       {allLessons.length === 0 && <p className="text-gray-600 text-center py-10">No lessons found matching the current filters.</p>}
 
-      <div className="overflow-x-auto bg-white rounded-xl shadow">
-        <table className="table table-zebra w-full">
-          <thead>
-              <tr>
-                  <th>SI</th>
-                  <th>Lesson Info</th>
-                  <th>Status</th>
-                  <th>Engagement</th>
-                  <th className="text-center">Action</th>
-              </tr>
-          </thead>
-          <tbody>
-            {allLessons.map((lesson, index) => (
-              <tr key={lesson._id}>
-                <th>{index + 1}</th>
-                <td>
-                  <div className="flex items-center space-x-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
-                        <img src={lesson?.image} alt="Lesson Image" />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-bold">{lesson?.title}</div>
-                      <div className="text-sm opacity-50">{lesson?.category} | {lesson?.emotionalTone}</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <span className={`badge ${lesson.isReviewed ? 'badge-success' : 'badge-warning'} badge-sm`}>
-                    {lesson.isReviewed ? 'Reviewed' : 'Pending'}
-                  </span>
-                  <br />
-                  <span className={`badge ${lesson.isFeatured ? 'badge-info' : 'badge-ghost'} badge-sm`}>
-                    {lesson.isFeatured ? 'Featured' : 'Standard'}
-                  </span>
-                </td>
-                <td className="text-sm">
-                  <div>Views: {lesson.views || 0}</div>
-                  <div>Likes: {lesson.likesCount || 0}</div>
-                </td>
-                <td className="flex flex-col gap-1 items-center">
-                  <button
-                    onClick={() => handleToggleFeatured(lesson)}
-                    className={`btn btn-xs ${lesson.isFeatured ? 'btn-warning' : 'btn-outline btn-warning'}`}
-                  >
-                    {lesson.isFeatured ? 'Unfeature' : 'Feature'}
-                  </button>
-                  <button
-                    onClick={() => handleToggleReviewed(lesson)}
-                    className={`btn btn-xs ${lesson.isReviewed ? 'btn-success' : 'btn-outline btn-success'}`}
-                  >
-                    {lesson.isReviewed ? 'Unmark Review' : 'Mark Reviewed'}
-                  </button>
-                  <button
-                    onClick={() => handleDeleteLesson(lesson)}
-                    className="btn btn-xs btn-outline btn-error"
-                  >
-                    <RiDeleteBin5Fill />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+     <div className="relative -mx-4 md:mx-0 overflow-x-auto bg-white rounded-xl shadow">
+  <table className="table table-zebra min-w-[1100px] w-full">
+    <thead className="bg-gray-50">
+      <tr>
+        <th className="whitespace-nowrap">SI</th>
+        <th className="whitespace-nowrap">Lesson Info</th>
+        <th className="whitespace-nowrap">Status</th>
+        <th className="whitespace-nowrap">Engagement</th>
+        <th className="whitespace-nowrap text-center">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {allLessons.map((lesson, index) => (
+        <tr key={lesson._id}>
+          <th className="whitespace-nowrap">{index + 1}</th>
+
+          {/* Lesson Info */}
+          <td className="min-w-[320px]">
+            <div className="flex items-center gap-3">
+              <div className="avatar shrink-0">
+                <div className="mask mask-squircle w-12 h-12">
+                  <img src={lesson?.image} alt="Lesson" />
+                </div>
+              </div>
+              <div className="truncate">
+                <p className="font-semibold truncate max-w-[220px]">
+                  {lesson?.title}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {lesson?.category} • {lesson?.emotionalTone}
+                </p>
+              </div>
+            </div>
+          </td>
+
+          {/* Status */}
+          <td className="min-w-[140px] whitespace-nowrap">
+            <span className={`badge ${lesson.isReviewed ? 'badge-success' : 'badge-warning'} badge-sm`}>
+              {lesson.isReviewed ? 'Reviewed' : 'Pending'}
+            </span>
+            <br />
+            <span className={`badge ${lesson.isFeatured ? 'badge-info' : 'badge-ghost'} badge-sm mt-1`}>
+              {lesson.isFeatured ? 'Featured' : 'Standard'}
+            </span>
+          </td>
+
+          {/* Engagement */}
+          <td className="min-w-[130px] text-sm whitespace-nowrap">
+            <div>Views: {lesson.views || 0}</div>
+            <div>Likes: {lesson.likesCount || 0}</div>
+          </td>
+
+          {/* Action */}
+          <td className="min-w-[160px] whitespace-nowrap">
+            <div className="flex flex-col gap-1 items-center">
+              <button
+                onClick={() => handleToggleFeatured(lesson)}
+                className={`btn btn-xs ${lesson.isFeatured ? 'btn-warning' : 'btn-outline btn-warning'}`}
+              >
+                {lesson.isFeatured ? 'Unfeature' : 'Feature'}
+              </button>
+
+              <button
+                onClick={() => handleToggleReviewed(lesson)}
+                className={`btn btn-xs ${lesson.isReviewed ? 'btn-success' : 'btn-outline btn-success'}`}
+              >
+                {lesson.isReviewed ? 'Unmark Review' : 'Mark Reviewed'}
+              </button>
+
+              <button
+                onClick={() => handleDeleteLesson(lesson)}
+                className="btn btn-xs btn-outline btn-error"
+              >
+                <RiDeleteBin5Fill />
+              </button>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
     </div>
   );
 }

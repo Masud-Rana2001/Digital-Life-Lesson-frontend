@@ -2,7 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import Lottie from "lottie-react";
-import Button from "../components/Shared/Button/Button";
+
 import Erroranimation from "../assets/lottie/Erroranimation.json";
 
 const  ErrorPage = () => {
@@ -55,11 +55,10 @@ const  ErrorPage = () => {
             <span>Go Back</span>
           </button>
 
-          <Button
-            label="Take Me Home"
+          <button
             onClick={() => navigate("/")}
             className="bg-red-500 text-white hover:bg-red-600 transition-colors py-2 px-5 rounded-lg"
-          />
+          >Take Me Home</button>
         </div>
 
       </div>

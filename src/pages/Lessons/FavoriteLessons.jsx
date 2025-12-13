@@ -135,71 +135,92 @@ console.log(favLessons)
       {favLessons.length === 0 && (
         <p className="text-gray-600 text-center py-10">You haven't created any lessons yet.</p>
       )}
-      <table className="table table-zebra">
-        {/* head */}
-          <thead>
-            <tr>
-              <th>SI</th>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Category</th>
-              <th>Tone</th>
-              <th>Access Level</th>
-              <th>Visibility</th>
-              <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-          {favLessons.map((lesson, index) => (
-            
-            <tr key={lesson._id}>
-              
-               <th>{index + 1}</th>
-              <td>
-                <img className="min-w-20 max-h-20 rounded-3xl object-cover" src={lesson?.image } alt="" />
-               </td>
-               <td className="font-medium">{lesson?.title }</td>
-               <td>{lesson?.category }</td>
-               <td>{lesson?.emotionalTone }</td>
-               <td>{lesson?.accessLevel }</td>
-               <td>{lesson?.visibility }</td>
-              <td className="flex flex-col gap-1">
-                <Link
-                  to={`/dashboard/my-lessons/${lesson?._id}`}
-                  className="btn btn-sm btn-outline btn-info">
-                  <MdInfoOutline className="inline-block mr-1" />
-                  Details
-                </Link>
-                <button
-                  onClick={()=>updaterFormRef.current.showModal()}
-                  className="btn btn-sm btn-outline btn-primary">
-                  <FaRegEdit className="inline-block mr-1" />
-                  Update
-                </button>
-                {/* Dialog */}
-                <dialog ref={updaterFormRef} className="modal">
-                <div className="modal-box w-11/12 max-w-4xl p-2">
-                  <UpdateLessonForm
-                    lesson={lesson}
-                    updaterFormRef={updaterFormRef}
-                    refetchFn={myLessonRefetch}
-                  />
-                </div>
-              </dialog>
-              
-                <button
-                  onClick={()=>handleDeleteLesson(lesson)}
-                  className="btn btn-sm btn-outline btn-error">
-                  <RiDeleteBin5Fill className="inline-block mr-1" />
-                  Delete
-                </button>
-               </td>
-              </tr>
-          ))}
-          
-      
-          </tbody>
-      </table>
+     <div className="relative -mx-4 md:mx-0 overflow-x-auto bg-white rounded-xl shadow">
+  <table className="table table-zebra min-w-[1100px] w-full">
+    <thead className="bg-gray-50">
+      <tr>
+        <th className="whitespace-nowrap">SI</th>
+        <th className="whitespace-nowrap">Image</th>
+        <th className="whitespace-nowrap">Title</th>
+        <th className="whitespace-nowrap">Category</th>
+        <th className="whitespace-nowrap">Tone</th>
+        <th className="whitespace-nowrap">Access Level</th>
+        <th className="whitespace-nowrap">Visibility</th>
+        <th className="whitespace-nowrap text-center">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {favLessons.map((lesson, index) => (
+        <tr key={lesson._id}>
+          <th className="whitespace-nowrap">{index + 1}</th>
+
+          {/* Image */}
+          <td className="min-w-[100px]">
+            <img
+              className="w-20 h-20 rounded-3xl object-cover"
+              src={lesson?.image}
+              alt="lesson"
+            />
+          </td>
+
+          {/* Title */}
+          <td className="min-w-[260px]">
+            <p className="font-medium truncate max-w-[240px]">
+              {lesson?.title}
+            </p>
+          </td>
+
+          <td className="min-w-[140px] whitespace-nowrap">
+            {lesson?.category}
+          </td>
+
+          <td className="min-w-[140px] whitespace-nowrap">
+            {lesson?.emotionalTone}
+          </td>
+
+          <td className="min-w-[140px] whitespace-nowrap">
+            {lesson?.accessLevel}
+          </td>
+
+          <td className="min-w-[130px] whitespace-nowrap">
+            {lesson?.visibility}
+          </td>
+
+          {/* Action */}
+          <td className="min-w-[190px] whitespace-nowrap">
+            <div className="flex flex-col gap-1">
+              <Link
+                to={`/dashboard/my-lessons/${lesson?._id}`}
+                className="btn btn-sm btn-outline btn-info"
+              >
+                <MdInfoOutline />
+                <span className="hidden sm:inline ml-1">Details</span>
+              </Link>
+
+              <button
+                onClick={() => updaterFormRef.current.showModal()}
+                className="btn btn-sm btn-outline btn-primary"
+              >
+                <FaRegEdit />
+                <span className="hidden sm:inline ml-1">Update</span>
+              </button>
+
+              <button
+                onClick={() => handleDeleteLesson(lesson)}
+                className="btn btn-sm btn-outline btn-error"
+              >
+                <RiDeleteBin5Fill />
+                <span className="hidden sm:inline ml-1">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
       
       
 

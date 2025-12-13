@@ -40,7 +40,7 @@ export default function NavItem({ to, icon, label }) {
         </span>
 
         {/* LABEL - only visible on large screens */}
-        <span className="hidden lg:inline text-sm">{label}</span>
+        <span className=" text-sm">{label}</span>
 
         {/* Tooltip for mobile collapsed view */}
         <span

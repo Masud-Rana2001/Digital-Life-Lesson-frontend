@@ -12,7 +12,7 @@ export default function FeaturedLessons() {
   const { data: lessons = [],isLoading, refetch : featuredLessonsRefetch } = useQuery({
     queryKey: ["featuredLessons"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/featured-lessons");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/featured-lessons`);
       return res.data;
     },
   });

@@ -142,6 +142,7 @@ const Profile = () => {
                 key={lesson._id}
                 lesson={lesson}
                 user={user}
+                userDB={userDB}
                 myLessonRefetch={createdLessonsReFetch}
               />
             ))}

@@ -58,7 +58,7 @@ export default function TopContributors() {
                 {/* Avatar */}
                 <div className="flex flex-col md:flex-row items-center gap-3 ">
                   <img
-                    src={user.imageURL}
+                    src={user.imageURL || user.imageUrl}
                     referrerPolicy="no-referrer"
                     className="w-16 h-16 rounded-full ring-4 ring-primary/20 shadow-lg object-cover"
                   />

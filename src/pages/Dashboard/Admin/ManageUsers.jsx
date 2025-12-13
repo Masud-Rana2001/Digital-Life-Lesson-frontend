@@ -10,48 +10,53 @@ const ManageUsers = () => {
             <h1 className="text-3xl font-bold mb-8 flex gap-5 text-primary">
               <FaUserTie/>
               Manage All User</h1>
-            <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
-              <table className='table table-zebra min-w-full leading-normal'>
-                <thead>
-                  <tr>
-                    <th
-                      scope='col'
-                      className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope='col'
-                      className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                    >
-                      Email
-                    </th>
-                    <th
-                      scope='col'
-                      className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                    >
-                      Role
-                    </th>
-                    <th
-                      scope='col'
-                      className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal text-center'
-                    >
-                      Total created lessons
-                    </th>
+            <div className="relative -mx-4 md:mx-0 overflow-x-auto bg-white rounded-xl shadow">
+  <table className="table table-zebra min-w-[1000px] w-full">
+    <thead className="bg-gray-50">
+      <tr>
+        <th
+          scope="col"
+          className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal whitespace-nowrap"
+        >
+          Name
+        </th>
 
-                    <th
-                      scope='col'
-                      className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                    >
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <UserDataRow />
-                </tbody>
-              </table>
-            </div>
+        <th
+          scope="col"
+          className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal whitespace-nowrap"
+        >
+          Email
+        </th>
+
+        <th
+          scope="col"
+          className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal whitespace-nowrap"
+        >
+          Role
+        </th>
+
+        <th
+          scope="col"
+          className="px-5 py-3 border-b border-gray-200 text-gray-800 text-center text-sm uppercase font-normal whitespace-nowrap"
+        >
+          Total Created Lessons
+        </th>
+
+        <th
+          scope="col"
+          className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal whitespace-nowrap"
+        >
+          Action
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <UserDataRow />
+    </tbody>
+  </table>
+</div>
+
           </div>
         </div>
       </div>
