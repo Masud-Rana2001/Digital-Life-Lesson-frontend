@@ -1,5 +1,6 @@
 import React from 'react'
 import useCreator from '../../hooks/useCreator'
+import { Link } from 'react-router';
 
 function ShowComments({ lesson,email }) {
   const { creator ,creatorRefetch} = useCreator(email);
@@ -19,15 +20,15 @@ function ShowComments({ lesson,email }) {
         className="flex items-start gap-3 p-4 bg-base-200 rounded-xl border border-base-300 shadow-sm hover:shadow-md transition-shadow duration-300"
       >
         {/* Avatar */}
-        <div className="flex-shrink-0">
+        <Link
+          to={`/dashboard/creator-profile/${creator.email}`}
+          className="flex-shrink-0">
           <img
-            src={ creator.imageURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(
-              c.email
-            )}&background=38bdf8&color=fff&rounded=true&size=48`}
+            src={ creator.imageURL || creator.imageUrl}
             alt={c.email}
             className="h-12 w-12 rounded-full object-cover"
           />
-        </div>
+        </Link>
 
         {/* Comment Content */}
         <div className="flex-1">

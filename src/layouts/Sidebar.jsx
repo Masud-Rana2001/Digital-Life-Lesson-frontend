@@ -16,11 +16,7 @@ export default function Sidebar({ role, dashboardNavItems, onClose }) {
       label: "Home",
       icon: <FaHome className="size-5" />,
     },
-    {
-      to: "/dashboard/profile",
-      label: role === "user" ? "My Profile" : "Admin Profile",
-      icon: <FaUserTie className="size-5" />,
-    },
+    
   ];
 
   return (

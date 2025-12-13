@@ -18,6 +18,16 @@ export default function MostSavedLessons() {
   });
 
 
+   const { data:userDB, refetch:userDBRfetch } = useQuery({
+      queryKey: ["userDB",user?.email ],
+      queryFn: async () => {
+       
+        const res = await axiosInstance.get(`/single-user`);
+        return res.data;
+      },
+    });
+
+
   return (
     <section className="py-12 px-5 bg-gradient-to-r bg-gradient-to-br from-sky-50 via-cyan-50 to-sky-50 mt-10 rounded-2xl shadow">
       <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-12 
@@ -31,7 +41,8 @@ export default function MostSavedLessons() {
            <LessonCard
                       key={lesson._id}
                       lesson={lesson}
-                      user={user}
+                       user={user}
+                       userDB={userDB}
                       myLessonRefetch={topSaveRefetch}
                       // isPremiumUser={user?.premium === true} // optional
                     />

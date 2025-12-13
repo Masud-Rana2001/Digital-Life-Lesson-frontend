@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router";
-
+import { RiAlarmWarningFill } from "react-icons/ri";
 import {
   MdSettings,
   MdFavorite,
@@ -26,7 +26,7 @@ const userNavItems = [
 const adminNavItems = [
   { to: "/dashboard/manage-users", label: "Manage Users", icon: FaUserTie },
   { to: "/dashboard/manage-lessons", label: "Manage Lessons", icon: FaBook },
-  { to: "/dashboard/reported-lessons", label: "Reported Lessons", icon: MdFavorite },
+  { to: "/dashboard/reported-lessons", label: "Reported Lessons", icon: RiAlarmWarningFill },
 ];
 
 export default function DashboardLayout() {

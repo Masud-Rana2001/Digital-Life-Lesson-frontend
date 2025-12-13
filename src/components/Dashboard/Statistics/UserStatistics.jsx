@@ -63,11 +63,11 @@ export default function DashboardHome() {
           </p>
         ) : (
             <>
-          <p className="inline-block bg-gray-800 text-white px-4 py-1 rounded-full text font-semibold shadow">
+          <p className="inline-block bg-gray-800 text-white px-4 py-2 rounded-full text font-semibold shadow">
             Free Plan
             </p>
-            <Link to="/pricing" className="btn btn-primary mx-5 btn-outline">
-                Update Plan
+            <Link to="/pricing" className="btn btn-primary mx-4  rounded-full">
+              ⭐ Update Plan
             </Link>
             </>
         )}
@@ -103,12 +103,7 @@ export default function DashboardHome() {
           type="3"
         />
 
-        <StatusCard
-          title="Total Users"
-          value={summaryData.totalUsers || 0}
-          icon={<FaUsers />}
-          type="4"
-        />
+        
       </div>
 
       {/* WEEKLY STATS */}

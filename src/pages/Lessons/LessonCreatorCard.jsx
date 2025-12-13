@@ -6,7 +6,7 @@ export default function LessonCreatorCard({ creator }) {
     <div className="bg-base-200 p-6 rounded-xl shadow mb-10">
       <div className="flex gap-4 items-center">
         <img
-          src={creator.imageURL}
+          src={creator.imageURL || creator.imageUrl}
           className="w-20 h-20 rounded-full object-cover border-4 border-accent"
         />
         <div>

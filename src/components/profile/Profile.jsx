@@ -51,7 +51,7 @@ const Profile = () => {
           {/* Avatar */}
           <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
             <img
-              src={user?.photoURL}
+              src={user?.photoURL }
               className="h-40 w-40 rounded-full object-cover ring-4 ring-base-100 shadow-xl"
             />
           </div>
