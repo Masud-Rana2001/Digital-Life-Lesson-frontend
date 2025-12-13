@@ -1,63 +1,71 @@
-import Button from '../components/Shared/Button/Button'
-import { useNavigate } from 'react-router'
 
-const ErrorPage = () => {
-  const navigate = useNavigate()
+import React from "react";
+import { useNavigate } from "react-router";
+import Lottie from "lottie-react";
+import Button from "../components/Shared/Button/Button";
+import Erroranimation from "../assets/lottie/Erroranimation.json";
+
+const  ErrorPage = () => {
+  const navigate = useNavigate();
 
   return (
-    <section className='bg-white '>
-      <div className='container flex items-center min-h-screen px-6 py-12 mx-auto'>
-        <div className='flex flex-col items-center max-w-sm mx-auto text-center'>
-          <p className='p-3 text-sm font-medium text-lime-500 rounded-full bg-blue-50 '>
+    <section className="bg-gray-50 min-h-screen flex items-center justify-center p-6">
+      <div className="max-w-xl mx-auto text-center bg-white p-10 rounded-2xl shadow-2xl border border-red-100">
+
+        <div className="w-full max-w-xs mx-auto mb-8">
+          <Lottie
+            animationData={Erroranimation}
+            loop
+            autoplay
+            style={{ height: 250 }}
+          />
+        </div>
+
+        <h1 className="text-6xl font-extrabold text-red-500 mb-4">
+          404
+        </h1>
+
+        <h2 className="text-3xl font-bold text-gray-800 md:text-4xl mb-3">
+          Oops! Page Not Found.
+        </h2>
+
+        <p className="mt-4 text-gray-600">
+          It looks like you've stumbled upon a digital black hole. We can't find the wisdom you are looking for.
+        </p>
+
+        <div className="flex items-center w-full mt-8 gap-x-4 justify-center">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center justify-center px-5 py-2 text-sm font-medium text-gray-700 transition-colors duration-200 bg-gray-100 border border-gray-300 rounded-lg gap-x-2 hover:bg-gray-200"
+          >
             <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth='2'
-              stroke='currentColor'
-              className='w-6 h-6'
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-5 h-5 rtl:rotate-180 text-red-500"
             >
               <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z'
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
               />
             </svg>
-          </p>
-          <h1 className='mt-3 text-2xl font-semibold text-gray-800  md:text-3xl'>
-            Something Went Wrong!
-          </h1>
-          <p className='mt-4 text-gray-500 '>Here are some helpful links:</p>
+            <span>Go Back</span>
+          </button>
 
-          <div className='flex items-center w-full mt-6 gap-x-3 shrink-0 sm:w-auto'>
-            <button
-              onClick={() => navigate(-1)}
-              className='flex items-center justify-center w-1/2 px-5 py-1 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto   hover:bg-gray-100 '
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth='1.5'
-                stroke='currentColor'
-                className='w-5 h-5 rtl:rotate-180 text-lime-500'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18'
-                />
-              </svg>
-
-              <span>Go back</span>
-            </button>
-
-            <Button label={'Take Me Home'} onClick={() => navigate('/')} />
-          </div>
+          <Button
+            label="Take Me Home"
+            onClick={() => navigate("/")}
+            className="bg-red-500 text-white hover:bg-red-600 transition-colors py-2 px-5 rounded-lg"
+          />
         </div>
+
       </div>
     </section>
-  )
-}
+  );
+};
+
 
 export default ErrorPage
