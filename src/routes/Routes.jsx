@@ -10,8 +10,7 @@ import ManageUsers from '../pages/Dashboard/Admin/ManageUsers'
 
 import Statistics from '../pages/Dashboard/Common/Statistics'
 import MainLayout from '../layouts/MainLayout'
-import MyInventory from '../pages/Dashboard/Seller/MyInventory'
-import ManageOrders from '../pages/Dashboard/Seller/ManageOrders'
+
 import MyOrders from '../pages/Dashboard/Customer/MyOrders'
 import { createBrowserRouter } from 'react-router'
 import PaymentSuccess from '../pages/Payment/PaymentSuccess'
@@ -95,14 +94,6 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'my-inventory',
-        element: (
-          <PrivateRoute>
-            <MyInventory />
-          </PrivateRoute>
-        ),
-      },
-      {
         path: 'manage-users',
         element: (
           <PrivateRoute>
@@ -166,10 +157,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: 'manage-orders',
-        element: <ManageOrders />,
-      },
+      
     ],
   },
 ])
