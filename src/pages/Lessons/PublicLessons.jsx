@@ -7,7 +7,7 @@ import useAuth from './../../hooks/useAuth';
 import FilterBar from "./ShareComponent/FilterBar"
 
 function PublicLessons() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,8 +31,16 @@ function PublicLessons() {
       return res.data;
     },
   });
+  const { data:userDB, refetch:userDBRfetch } = useQuery({
+    queryKey: ["userDB",user?.email ],
+    queryFn: async () => {
+     
+      const res = await axiosSecure.get(`/single-user`);
+      return res.data;
+    },
+  });
 
-  if (isLoading) return <LoadingSpinner />;
+  if ( loading || isLoading) return <LoadingSpinner />;
   if (error) return <p className="text-center text-red-600 py-10">Failed to load public lessons.</p>;
 
   const { lessons, totalPages } = data;
@@ -63,6 +71,7 @@ function PublicLessons() {
             key={lesson._id}
             lesson={lesson}
             user={user}
+            userDB={userDB}
             publicLessonRefetch={refetch}
           />
         ))}

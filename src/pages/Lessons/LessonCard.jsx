@@ -12,6 +12,7 @@ import ShareModal from './ShareComponent/ShareModal';
 export default function LessonCard({
   lesson,
   user,
+  userDB,
   publicLessonRefetch,
   myLessonRefetch,
   featuredLessonsRefetch }) {
@@ -33,7 +34,7 @@ export default function LessonCard({
 
       const [showOptions,setShowOptions] = useState(false)
 
-  
+  console.log("userDB",userDB)
   const {
     _id,
     image,
@@ -54,9 +55,9 @@ export default function LessonCard({
   
 
   const isPremium = accessLevel === "Premium";
-  const userIsPremium = user?.isPremium;
+  const userIsPremium = userDB?.isPremium;
   const restricted = isPremium && !userIsPremium;
-
+  console.log("restricted",userIsPremium)
   const formattedDate = new Date(createdAt).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",

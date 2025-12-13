@@ -4,6 +4,7 @@ import Logo from "../components/Shared/Logo";
 import NavItem from "../components/Shared/NavItem";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
+import ProfileCard from "./ProfileCard";
 
 export default function Sidebar({ role, dashboardNavItems, onClose }) {
   const { logOut } = useAuth();
@@ -75,19 +76,11 @@ export default function Sidebar({ role, dashboardNavItems, onClose }) {
         ))}
 
         <hr className="border-base-400 my-4" />
-
-        {/* Logout */}
         <li>
-          <button
-            onClick={() => {
-              logOut();
-              toast.success("Logout successful");
-            }}
-            className="flex gap-2 items-center text-base"
-          >
-            <RiLogoutCircleLine className="size-5" /> Logout
-          </button>
+          <ProfileCard logOut={ logOut} />
         </li>
+
+       
       </ul>
     </aside>
   );

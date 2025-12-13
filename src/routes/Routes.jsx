@@ -2,16 +2,11 @@ import Home from '../pages/Home/Home'
 import ErrorPage from '../pages/ErrorPage'
 import Login from '../pages/Login/Login'
 import SignUp from '../pages/SignUp/SignUp'
-import PlantDetails from '../pages/PlantDetails/PlantDetails'
 import PrivateRoute from './PrivateRoute'
 import DashboardLayout from '../layouts/DashboardLayout'
-import AddPlant from '../pages/Dashboard/Seller/AddPlant'
 import ManageUsers from '../pages/Dashboard/Admin/ManageUsers'
-
 import Statistics from '../pages/Dashboard/Common/Statistics'
 import MainLayout from '../layouts/MainLayout'
-
-import MyOrders from '../pages/Dashboard/Customer/MyOrders'
 import { createBrowserRouter } from 'react-router'
 import PaymentSuccess from '../pages/Payment/PaymentSuccess'
 import AddLesson from '../pages/Lessons/AddLesson'
@@ -47,7 +42,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/pricing',
-        element: <Pricing />,
+        element:<PrivateRoute><Pricing /></PrivateRoute> ,
       },
     ],
   },

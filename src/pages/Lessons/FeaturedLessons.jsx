@@ -3,9 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import LessonCard from "./LessonCard";
 import useAuth from './../../hooks/useAuth';
+import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import useAxiosSecure from './../../hooks/useAxiosSecure';
 
 export default function FeaturedLessons() {
-  const {user} = useAuth()
+  const axiosSecure = useAxiosSecure()
+  const {user,loading} = useAuth()
   const { data: lessons = [],isLoading, refetch : featuredLessonsRefetch } = useQuery({
     queryKey: ["featuredLessons"],
     queryFn: async () => {
@@ -13,14 +16,16 @@ export default function FeaturedLessons() {
       return res.data;
     },
   });
-  console.log(lessons)
-  if (isLoading) {
-    return (
-      <div className="text-center py-16 text-xl font-semibold">
-        Loading Featured Lessons...
-      </div>
-    );
-  }
+  const { data:userDB, refetch:userDBRfetch } = useQuery({
+    queryKey: ["userDB",user?.email ],
+    queryFn: async () => {
+     
+      const res = await axiosSecure.get(`/single-user`);
+      return res.data;
+    },
+  });
+  
+  if (loading || isLoading) <LoadingSpinner/>
 
   return (
     <section className="mt-10 shadow rounded-2xl py-16 px-5 bg-gradient-to-r bg-gradient-to-br from-sky-50 via-cyan-50 to-sky-50 ">
@@ -42,6 +47,7 @@ export default function FeaturedLessons() {
             key={lesson._id}
             lesson={lesson}
             user={user}
+            userDB={userDB}
             featuredLessonsRefetch={featuredLessonsRefetch}
           />
         ))}

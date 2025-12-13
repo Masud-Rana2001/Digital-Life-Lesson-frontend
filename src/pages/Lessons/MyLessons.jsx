@@ -10,7 +10,7 @@ import ErrorPage from "../ErrorPage";
 
 function MyLessons() {
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
+  const { user,loading } = useAuth();
 
   const { data: lessons = [],isLoading, refetch:myLessonRefetch, error } = useQuery({
     queryKey: ["myLessons", user?.email],
@@ -20,8 +20,16 @@ function MyLessons() {
     },
     enabled: !!user?.email,
   });
+  const { data:userDB, refetch:userDBRfetch } = useQuery({
+    queryKey: ["userDB",user?.email ],
+    queryFn: async () => {
+     
+      const res = await axiosSecure.get(`/single-user`);
+      return res.data;
+    },
+  });
  
-  if (isLoading) return <LoadingSpinner/>
+  if (isLoading || loading) return <LoadingSpinner/>
   if (error) return <ErrorPage/>
 
   return (
@@ -39,6 +47,7 @@ function MyLessons() {
             key={lesson._id}
             lesson={lesson}
             user={user}
+            userDB={userDB}
             myLessonRefetch={myLessonRefetch}
             // isPremiumUser={user?.premium === true} // optional
           />
