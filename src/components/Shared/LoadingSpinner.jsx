@@ -1,17 +1,40 @@
-import { ScaleLoader } from 'react-spinners'
+// src/components/Shared/LottieLoadingSpinner.jsx
 
-const LoadingSpinner = ({ smallHeight }) => {
+import Lottie from "lottie-react";
+import loadingAnimation from "../../assets/lottie/loading.json";
+
+const LottieLoadingSpinner = ({ smallHeight = false }) => {
   return (
     <div
-      className={` ${smallHeight ? 'h-[250px]' : 'h-[70vh]'}
-      flex 
-      flex-col 
-      justify-center 
-      items-center `}
+      className={`
+        w-full
+        ${smallHeight ? "min-h-[200px]" : "min-h-screen"}
+        flex
+        flex-col
+        justify-center
+        items-center
+        px-4
+        text-center
+      `}
     >
-      <ScaleLoader size={100} color='lime' />
-    </div>
-  )
-}
+      {/* Lottie Animation */}
+      <div
+        className="
+          w-60 h-60
+          md:w-80 md:h-80
+          lg:w-100 lg:h-100
+        "
+      >
+        <Lottie
+          animationData={loadingAnimation}
+          loop
+          autoplay
+        />
+      </div>
 
-export default LoadingSpinner
+     
+    </div>
+  );
+};
+
+export default LottieLoadingSpinner;

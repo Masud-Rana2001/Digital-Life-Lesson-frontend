@@ -82,7 +82,7 @@ export default function DashboardLayout() {
         {isOpen && (
           <>
             <div
-              className="fixed inset-0 bg-black/40 z-30 lg:hidden"
+              className="fixed inset-0 bg-white z-30 lg:hidden"
               onClick={() => setIsOpen(false)}
             />
             <Sidebar
