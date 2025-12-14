@@ -116,7 +116,7 @@ function ManageLessons() {
   if (error) return <p className="text-center text-red-600">Failed to load lessons.</p>;
 
   return (
-    <div className="max-w-7xl min-h-screen mx-auto py-10 px-4">
+    <div className="w-full py-10 px-4">
       <h1 className="text-3xl font-bold mb-8">📚 Manage All Lessons</h1>
         
       {/* --- 1. Admin Status Overview --- */}

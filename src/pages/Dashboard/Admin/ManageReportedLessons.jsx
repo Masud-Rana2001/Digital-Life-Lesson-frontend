@@ -93,7 +93,7 @@ function ManageReportedLessons() {
     if (isLoading) return <LoadingSpinner/>
 
     return (
-        <div className="max-w-7xl mx-auto py-10 px-4">
+        <div className="w-full py-10 px-4">
             <h1 className="text-3xl font-bold mb-8 text-red-600">🚨 Reported Lessons Management</h1>
 
             {reportedLessons.length === 0 ? (

@@ -72,7 +72,7 @@ export default function DashboardLayout() {
             </nav>
 
             {/* Routed content */}
-            <div className="p-6 flex-1">
+            <div className="p-4 sm:p-6 flex-1 w-full overflow-x-hidden">
               <Outlet />
             </div>
           </main>
