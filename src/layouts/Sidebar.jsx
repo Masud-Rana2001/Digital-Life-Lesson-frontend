@@ -1,66 +1,42 @@
-import { FaBook, FaHome, FaUserTie } from "react-icons/fa";
-import { RiLogoutCircleLine } from "react-icons/ri";
+import { FaHome } from "react-icons/fa";
 import Logo from "../components/Shared/Logo";
 import NavItem from "../components/Shared/NavItem";
 import useAuth from "../hooks/useAuth";
-import { toast } from "react-hot-toast";
 import ProfileCard from "./ProfileCard";
 
 export default function Sidebar({ role, dashboardNavItems, onClose }) {
   const { logOut } = useAuth();
 
-  // Common navigation items
   const commonNav = [
-    {
-      to: "/dashboard",
-      label: "Home",
-      icon: <FaHome className="size-5" />,
-    },
-    
+    { to: "/dashboard", label: "Home", icon: <FaHome className="size-5" /> },
   ];
 
   return (
     <aside
       className={`
-        flex flex-col p-5 
-        border-r border-base-300 shadow-xl 
-        bg-base-100/80 backdrop-blur-md
+        flex flex-col bg-base-100/90 backdrop-blur-md border-r shadow-xl
+        w-64
         ${onClose
-          ? "fixed top-0 left-0 z-40 w-64 h-full"
-          : "hidden lg:flex lg:fixed lg:top-0 lg:left-0 lg:h-screen w-64"}
+          ? "fixed top-0 left-0 z-40 h-full"
+          : "hidden lg:flex lg:fixed lg:top-0 lg:left-0 lg:h-screen"}
       `}
     >
-      {/* Logo Row */}
-      {onClose ? (
-        <div className="flex justify-between items-center mb-5">
-          <Logo />
-          <button className="btn btn-ghost" onClick={onClose}>
-            ✖
-          </button>
-        </div>
-      ) : (
-        <div className="flex items-center gap-2 mb-5 pl-2">
-          <Logo />
-        </div>
-      )}
+      <div className="flex justify-between items-center p-3">
+        <Logo />
+        {onClose && (
+          <button onClick={onClose} className="btn btn-ghost">✖</button>
+        )}
+      </div>
 
-      <hr className="border-base-300 mb-3" />
+      <hr />
 
-      <ul className="menu flex-1 space-y-1">
-        {/* Common Nav */}
-        {commonNav.map(({ to, label, icon }) => (
-          <NavItem
-            key={to}
-            to={to}
-            label={label}
-            icon={icon}
-            onClick={onClose}
-          />
+      <ul className="menu flex-1 space-y-1 px-2">
+        {commonNav.map(item => (
+          <NavItem key={item.to} {...item} onClick={onClose} />
         ))}
 
-        <hr className="border-base-400 my-4" />
+        <hr className="my-3" />
 
-        {/* Role-specific Nav */}
         {dashboardNavItems.map(({ to, label, icon: Icon }) => (
           <NavItem
             key={to}
@@ -71,12 +47,8 @@ export default function Sidebar({ role, dashboardNavItems, onClose }) {
           />
         ))}
 
-        <hr className="border-base-400 my-4" />
-        <li>
-          <ProfileCard logOut={ logOut} />
-        </li>
-
-       
+        <hr className="my-3" />
+        <ProfileCard logOut={logOut} />
       </ul>
     </aside>
   );

@@ -1,67 +1,93 @@
-import UserDataRow from './UserDataRow'
-import { FaBook, FaHome, FaUserTie } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import LoadingSpinner from "./../../../components/Shared/LoadingSpinner";
+import useAxiosSecure from "./../../../hooks/useAxiosSecure";
+import UserDataRow from "./UserDataRow";
+
 const ManageUsers = () => {
+  const axiosSecure = useAxiosSecure();
+  const [page, setPage] = useState(1);
+
+  const { data, isLoading ,refetch} = useQuery({
+    queryKey: ["allUsers", page], 
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/all-users?page=${page}&limit=${6}`
+      );
+      return res.data;
+    }
+  });
+
+  const { users = [], totalPages = 1 } = data || {};
+  console.log("data",data)
+
+  if (isLoading) return <LoadingSpinner />;
+
   return (
-    <>
-      <div className='w-full px-4 sm:px-8'>
-        <div className='py-8'>
-          <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
+    <div className="w-full px-2 sm:px-8 py-6">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6">
+        👥 Manage Users
+      </h1>
 
-            <h1 className="text-3xl font-bold mb-8 flex gap-5 text-primary">
-              <FaUserTie/>
-              Manage All User</h1>
-            <div className="relative -mx-4 md:mx-0 overflow-x-auto bg-white rounded-xl shadow">
-  <table className="table table-zebra min-w-[1000px] w-full">
-    <thead className="bg-gray-50">
-      <tr>
-        <th
-          scope="col"
-          className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal whitespace-nowrap"
-        >
-          Name
-        </th>
+      {users.length === 0 ? (
+        <p className="text-center py-10 border border-dashed rounded-lg">
+          No users found.
+        </p>
+      ) : (
+        <>
+          {/* Responsive Table */}
+          <div className="relative -mx-2 sm:mx-0 overflow-x-auto">
+            <table className="table table-xs min-w-[500px]">
+              <thead>
+                <tr>
+                  <th>SI</th>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Created Lessons</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
 
-        <th
-          scope="col"
-          className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal whitespace-nowrap"
-        >
-          Email
-        </th>
-
-        <th
-          scope="col"
-          className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal whitespace-nowrap"
-        >
-          Role
-        </th>
-
-        <th
-          scope="col"
-          className="px-5 py-3 border-b border-gray-200 text-gray-800 text-center text-sm uppercase font-normal whitespace-nowrap"
-        >
-          Total Created Lessons
-        </th>
-
-        <th
-          scope="col"
-          className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal whitespace-nowrap"
-        >
-          Action
-        </th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <UserDataRow />
-    </tbody>
-  </table>
-</div>
-
+              <tbody>
+                {users.map((user, index) => (
+                  <UserDataRow
+                    key={user._id}
+                    user={user}
+                    index={index}
+                    refetch={refetch}
+                  />
+                ))}
+              </tbody>
+            </table>
           </div>
-        </div>
-      </div>
-    </>
-  )
-}
 
-export default ManageUsers
+          {/* Pagination */}
+          <div className="flex justify-center mt-10 gap-2">
+            <button
+              className="btn btn-outline"
+              disabled={page === 1}
+              onClick={() => setPage(p => p - 1)}
+            >
+              Prev
+            </button>
+
+            <span className="px-4 py-2 font-semibold">
+              Page {page} / {totalPages}
+            </span>
+
+            <button
+              className="btn btn-outline"
+              disabled={page === totalPages}
+              onClick={() => setPage(p => p + 1)}
+            >
+              Next
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default ManageUsers;

@@ -15,14 +15,24 @@ const CreatorProfile = () => {
 
   console.log(creator)
 
-    const { data: lessons = [], refetch:LessonRefetch, error } = useQuery({
-        queryKey: ["myLessons", user?.email],
+    const { data: mycreatedLessons = [], refetch:LessonRefetch, error } = useQuery({
+        queryKey: ["mycreatedLessons", user?.email],
         queryFn: async () => {
           const res = await axiosInstance.get(`/my-lessons/${user?.email}`);
           return res.data;
         },
         enabled: !!user?.email,
-      });
+    });
+  
+  
+   // Fetch user DB data
+  const { data: userDB = [] } = useQuery({
+    queryKey: ["userDB", user?.email],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/single-user`);
+      return res.data;
+    },
+  });
 
   return (
     <div className=" flex items-center justify-center px-4 py-12">
@@ -90,18 +100,19 @@ const CreatorProfile = () => {
               {creator.name}'s Lessons
             </h3>
 
-            {lessons.length === 0 && (
+            {mycreatedLessons.length === 0 && (
               <p className="text-base-content/60 text-center">
                 {creator.name} hasn't created any lessons yet.
               </p>
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {lessons.map((lesson) => (
+              {mycreatedLessons.map((lesson) => (
                 <LessonCard
                   key={lesson._id}
                   lesson={lesson}
                   user={user}
+                  userDB={userDB}
                   myLessonRefetch={creatorRefetch}
                 />
               ))}

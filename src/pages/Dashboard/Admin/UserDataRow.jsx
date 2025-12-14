@@ -4,19 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import UpdateUserRoleModal from "../../../components/Modal/UpdateUserRoleModal";
 
-const UserDataRow = () => {
+const UserDataRow = ({ user, index, refetch }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
   const axiosSecure = useAxiosSecure();
 
-  const { data: allUsers = [], isLoading, refetch } = useQuery({
-    queryKey: ["allUsers"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/all-users`);
-      return res.data;
-    },
-  });
+
 
   const closeModal = () => {
     setIsOpen(false);
@@ -101,32 +95,33 @@ const handleDeleteUser = async (userId, userEmail) => {
 
   return (
     <>
-      {allUsers.map((user) => (
+      
         <tr key={user._id}>
-          <td className="px-5 py-5 border-b border-gray-300 bg-white">{user.name}</td>
-          <td className="px-5 py-5 border-b border-gray-300 bg-white">{user.email}</td>
-          <td className="px-5 py-5 border-b border-gray-300 bg-white">{user.role}</td>
-          <td className="px-5 py-5 border-b border-gray-300 bg-white text-center">
+          <td>{index}</td>
+          <td>{user.name}</td>
+          <td>{user.email}</td>
+          <td>{user.role}</td>
+          <td>
             {user.myLesson?.length || 0}
           </td>
 
-          <td className="px-5 py-5 border-b border-gray-300 bg-white ">
-            <div className="flex gap-2">
+          <td>
+            <div className="flex flex-col gap-1 items-center">
             <button
               onClick={() => openModal(user)}
-              className="btn btn-outline btn-secondary btn-sm"
+              className="btn btn-outline btn-secondary btn-xs"
             >
               Update Role
             </button>
 
               <button
                 onClick={()=>handleDeleteUser(user._id, user.email)}
-                className="btn btn-outline btn-error btn-sm">Delete</button>
+                className="btn btn-outline btn-error btn-xs">Delete</button>
 
             </div>
           </td>
         </tr>
-      ))}
+      
 
       {/* Modal only renders when selectedUser exists */}
       {selectedUser && (

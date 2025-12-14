@@ -96,7 +96,7 @@ export default function UpdateProfileForm({
           icon: "success",
         });
 
-        await refreshUser();
+        refreshUser();
         reset();
         updaterFormRef.current.close();
       } else {

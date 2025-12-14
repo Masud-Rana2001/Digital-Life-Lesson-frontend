@@ -22,7 +22,12 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      email: "admin@email.com",
+      password:"AAAa@1234"
+    }
+  });
 
   if (loading) return <LoadingSpinner />;
   if (user) return <Navigate to={from} replace />;
