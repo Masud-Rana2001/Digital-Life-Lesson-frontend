@@ -1,8 +1,7 @@
-import  Swal  from 'sweetalert2';
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from 'sweetalert2';
 import UpdateUserRoleModal from "../../../components/Modal/UpdateUserRoleModal";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const UserDataRow = ({ user, index, refetch }) => {
   const [isOpen, setIsOpen] = useState(false);
