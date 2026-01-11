@@ -16,12 +16,12 @@ const CreatorProfile = () => {
   console.log(creator)
 
     const { data: mycreatedLessons = [], refetch:LessonRefetch, error } = useQuery({
-        queryKey: ["mycreatedLessons", user?.email],
+        queryKey: ["mycreatedLessons", creator?.email],
         queryFn: async () => {
-          const res = await axiosInstance.get(`/my-lessons/${user?.email}`);
+          const res = await axiosInstance.get(`/my-lessons/${creator?.email}`);
           return res.data;
         },
-        enabled: !!user?.email,
+        enabled: !!creator?.email,
     });
   
   
@@ -106,7 +106,7 @@ const CreatorProfile = () => {
               </p>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {mycreatedLessons.map((lesson) => (
                 <LessonCard
                   key={lesson._id}

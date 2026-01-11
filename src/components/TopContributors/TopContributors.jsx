@@ -1,10 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
+import { Link } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+
+const badges = [
+  { label: "🥇 Gold", color: "from-yellow-400 to-amber-500" },
+  { label: "🥈 Silver", color: "from-gray-300 to-gray-400" },
+  { label: "🥉 Bronze", color: "from-orange-400 to-orange-600" },
+];
 
 export default function TopContributors() {
   const axiosInstance = useAxiosSecure();
-
-  const badges = ["🥇 Gold", "🥈 Silver", "🥉 Bronze"];
 
   const { data: contributors = [], isLoading } = useQuery({
     queryKey: ["topContributors"],
@@ -15,85 +21,97 @@ export default function TopContributors() {
   });
 
   return (
-    <section className="px-5 py-16 bg-gradient-to-br from-sky-50 via-cyan-50 to-sky-100 mt-10 rounded-2xl shadow">
-      <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-primary">
-        🏆 Top Contributors of the Week
-      </h2>
-
-      {/* Loading Skeleton */}
-      {isLoading && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="animate-pulse bg-base-200/60 backdrop-blur-xl p-6 rounded-2xl h-44"
-            />
-          ))}
+    <section className="section-padding glass-effect rounded-3xl">
+      <div className="container-custom">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="heading-xl mb-4">
+            🏆 Top <span className="text-gradient">Contributors</span>
+          </h2>
+          <p className="text-base-content/70 max-w-2xl mx-auto">
+            Celebrating our most active community members who share their wisdom and inspire others.
+          </p>
         </div>
-      )}
 
-      {/* Contributors List */}
-      {!isLoading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {contributors.map((user, index) => (
-           
+        {/* Loading Skeleton */}
+        {isLoading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="card-uniform p-6 h-44 skeleton-animate"
+              />
+            ))}
+          </div>
+        )}
 
-            <div
-              key={user.email}
-              className="p-6 rounded-2xl shadow-xl transition-all border group  grid grid-cols-1
-                         bg-gradient-to-br from-white/70 via-white/40 to-white/10 overflow-hidden
-                         backdrop-blur-xl border-white/40 hover:border-primary/40
-                         hover:shadow-2xl hover:scale-[1.02] duration-300"
-            >
-              {/* Top Row: Rank + Avatar */}
-              <div className="flex flex-col md:flex-row items-center justify-between mb-5">
-                {/* Badge / Rank */}
-                <div className="flex flex-col items-center">
-                  <span className="text-4xl drop-shadow-sm">
-                    {badges[index] || `#${index + 1}`}
-                  </span>
-                  
-                </div>
+        {/* Contributors Grid */}
+        {!isLoading && contributors.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {contributors.map((user, index) => (
+              <motion.div
+                key={user.email}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="card-uniform p-6 hover:border-primary/50"
+              >
+                <div className="flex items-start gap-4">
+                  {/* Rank Badge */}
+                  <div className="flex flex-col items-center">
+                    {index < 3 ? (
+                      <span className={`text-3xl mb-1`}>
+                        {badges[index].label.split(" ")[0]}
+                      </span>
+                    ) : (
+                      <span className="w-10 h-10 rounded-full bg-base-200 flex items-center justify-center font-bold text-base-content/60">
+                        #{index + 1}
+                      </span>
+                    )}
+                  </div>
 
-                {/* Avatar */}
-                <div className="flex flex-col md:flex-row items-center gap-3 ">
-                  <img
-                    src={user?.imageURL || user?.imageUrl}
-                    referrerPolicy="no-referrer"
-                    className="w-16 h-16 rounded-full ring-4 ring-primary/20 shadow-lg object-cover"
-                  />
-                  <div>
-                    <h3 className="font-bold text-lg">{user.name}</h3>
-                    <p className="text-sm opacity-70">{user.email}</p>
+                  {/* User Info */}
+                  <div className="flex-1 min-w-0">
+                    <Link to={`/dashboard/creator-profile/${user.email}`}>
+                      <img
+                        src={user?.imageURL || user?.imageUrl || "https://i.ibb.co/L5hY5Fz/default-user.png"}
+                        referrerPolicy="no-referrer"
+                        alt={user.name}
+                        className="w-14 h-14 rounded-full object-cover border-4 border-primary/20 mb-3"
+                      />
+                    </Link>
+                    <Link
+                      to={`/dashboard/creator-profile/${user.email}`}
+                      className="font-bold text-lg hover:text-primary transition-colors block truncate"
+                    >
+                      {user.name}
+                    </Link>
+                    <p className="text-sm text-base-content/60 truncate">{user.email}</p>
                   </div>
                 </div>
-              </div>
 
-              {/* Score Row */}
-              <div className="flex items-center justify-between">
-                <span className="badge badge-lg border-primary/40 text-primary bg-primary/10 px-4 py-3 text-base">
-                  ⭐ Score: {user?.weeklyStats?.score || 0}
-                </span>
-
-                <div className="text-right text-sm opacity-70">
-                  💬 Comments: {user?.weeklyStats?.commentsGiven || 0}
+                {/* Stats */}
+                <div className="flex items-center justify-between mt-4 pt-4 border-t border-base-300">
+                  <span className="badge badge-primary">
+                    ⭐ Score: {user?.weeklyStats?.score || 0}
+                  </span>
+                  <span className="text-sm text-base-content/60">
+                    💬 {user?.weeklyStats?.commentsGiven || 0} comments
+                  </span>
                 </div>
-              </div>
-            </div>
-            
-          ))}
-        </div>
-      )}
+              </motion.div>
+            ))}
+          </div>
+        )}
 
-      {/* View More Button */}
-      {/* <div className="text-center mt-12">
-        <a
-          href="/contributors"
-          className="btn btn-primary btn-lg px-8 shadow-lg hover:shadow-xl"
-        >
-          View All Contributors →
-        </a>
-      </div> */}
+        {/* Empty State */}
+        {!isLoading && contributors.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-base-content/60">No contributors data available</p>
+          </div>
+        )}
+      </div>
     </section>
   );
 }

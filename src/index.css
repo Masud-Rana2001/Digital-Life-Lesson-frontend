@@ -1,2 +1,158 @@
 @import 'tailwindcss';
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light --default, dark;
+}
+
+/* Custom Theme Variables */
+:root {
+  --color-primary: #0ea5e9;
+  --color-secondary: #6366f1;
+  --color-accent: #22c55e;
+  --color-neutral: #64748b;
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+  --color-primary: #38bdf8;
+  --color-secondary: #818cf8;
+  --color-accent: #4ade80;
+  --color-neutral: #94a3b8;
+}
+
+/* Smooth Theme Transition */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: oklch(var(--b2));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(var(--p) / 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(var(--p) / 0.7);
+}
+
+/* Skeleton Loader Animation */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.skeleton-animate {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Card Consistent Styling */
+.card-uniform {
+  @apply rounded-2xl border border-base-300/50 bg-base-100 shadow-sm hover:shadow-lg transition-all duration-300;
+}
+
+/* Glass Effect */
+.glass-effect {
+  @apply bg-base-100/80 backdrop-blur-xl border border-base-300/30;
+}
+
+/* Gradient Backgrounds */
+.gradient-primary {
+  background: linear-gradient(135deg, oklch(var(--p) / 0.1) 0%, oklch(var(--s) / 0.1) 100%);
+}
+
+.gradient-hero {
+  background: radial-gradient(circle at 20% 20%, oklch(var(--p) / 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, oklch(var(--s) / 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, oklch(var(--a) / 0.05) 0%, transparent 70%);
+}
+
+/* Focus States */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px oklch(var(--p) / 0.3);
+}
+
+/* Button Hover Effects */
+.btn {
+  @apply transition-all duration-200;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Form Input Styling */
+.input, .select, .textarea {
+  @apply bg-base-100 border-base-300 focus:border-primary;
+}
+
+/* Badge Styling */
+.badge-category {
+  @apply bg-primary/10 text-primary border-primary/20;
+}
+
+.badge-tone {
+  @apply bg-secondary/10 text-secondary border-secondary/20;
+}
+
+/* Social Icon Styling */
+.social-icon {
+  @apply w-10 h-10 rounded-full bg-base-200 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer;
+}
+
+/* Section Spacing */
+.section-padding {
+  @apply py-16 md:py-20 lg:py-24;
+}
+
+/* Container Max Width */
+.container-custom {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Text Gradient */
+.text-gradient {
+  @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+}
+
+/* Card Grid - 4 columns on desktop */
+.card-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
+}
+
+/* Responsive Typography */
+.heading-xl {
+  @apply text-3xl sm:text-4xl md:text-5xl font-extrabold;
+}
+
+.heading-lg {
+  @apply text-2xl sm:text-3xl md:text-4xl font-bold;
+}
+
+.heading-md {
+  @apply text-xl sm:text-2xl font-semibold;
+}
+
+/* Dark Mode Specific Overrides */
+[data-theme="dark"] .glass-effect {
+  @apply bg-base-200/60 border-base-content/10;
+}
+
+[data-theme="dark"] .gradient-hero {
+  background: radial-gradient(circle at 20% 20%, oklch(var(--p) / 0.2) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, oklch(var(--s) / 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, oklch(var(--a) / 0.1) 0%, transparent 70%);
+}

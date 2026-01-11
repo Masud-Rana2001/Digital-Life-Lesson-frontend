@@ -14,14 +14,16 @@ import UpdateLessonForm from './UpdateLessonForm';
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import { toast } from 'react-hot-toast';
 
+
 function FavoriteLessons() {
-  const [selectedLesson, setSelectedLesson] = useState(null);
+ 
   const [page, setPage] = useState(1);
 
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const updaterFormRef = useRef(null);
 
+  
   const { data, isLoading, refetch: myLessonRefetch, error } = useQuery({
     queryKey: ["favLessons", user?.email, page],
     queryFn: async () => {
@@ -31,6 +33,8 @@ function FavoriteLessons() {
     enabled: !!user?.email,
     keepPreviousData: true, // smooth pagination
   });
+  
+
 
   const favLessons = data?.lessons || [];
   const totalPages = data?.totalPages || 1;
@@ -72,18 +76,20 @@ function FavoriteLessons() {
     toast.success("Download successful.");
   };
 
-  const handleDeleteLesson = async (lesson) => {
+  const handleRemoveFromFavList = async (lesson) => {
     const result = await Swal.fire({
-      title: "Are you sure to delete the lesson?",
+      title: "Are you sure to remove the lesson from favorite list ?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, remove it!"
     });
 
     if (result.isConfirmed) {
-      await axiosSecure.delete(`/lessons/${lesson._id}`);
-      Swal.fire("Deleted!", "Your lesson has been deleted.", "success");
+      await axiosSecure.patch(`/remove-from-fav`, {
+      lessonId: lesson._id
+    });
+      Swal.fire("Removed!", "Your lesson has been removed from favorite list.", "success");
       myLessonRefetch();
     }
   };
@@ -162,20 +168,13 @@ function FavoriteLessons() {
                       <span className="hidden sm:inline ml-1">Details</span>
                     </Link>
 
+                   
                     <button
-                      onClick={() => updaterFormRef.current.showModal()}
-                      className="btn btn-xs sm:btn-sm btn-outline btn-primary"
-                    >
-                      <FaRegEdit />
-                      <span className="hidden sm:inline ml-1">Update</span>
-                    </button>
-
-                    <button
-                      onClick={() => handleDeleteLesson(lesson)}
+                      onClick={() => handleRemoveFromFavList(lesson)}
                       className="btn btn-xs sm:btn-sm btn-outline btn-error"
                     >
                       <RiDeleteBin5Fill />
-                      <span className="hidden sm:inline ml-1">Delete</span>
+                      <span className="hidden sm:inline ml-1">Remove</span>
                     </button>
                   </div>
                 </td>

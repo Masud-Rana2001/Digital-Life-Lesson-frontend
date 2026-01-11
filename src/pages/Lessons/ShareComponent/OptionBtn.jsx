@@ -1,10 +1,10 @@
+// OptionBtn.jsx
 import {useEffect,useRef} from 'react'
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import { CiMenuKebab } from "react-icons/ci";
 import { Link } from "react-router";
 import Swal from 'sweetalert2'
-import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from './../../../hooks/useAxiosSecure';
 import UpdateLessonForm from '../UpdateLessonForm';
 import { MdInfoOutline } from "react-icons/md";
@@ -50,7 +50,11 @@ function OptionBtn({ isMyLesson, setShowOptions, showOptions, lessonId, refetchF
 
   return (
     <div className="relative">
-      {isMyLesson && (
+      {/* ----------------------
+        CHANGE HERE:
+        Only show menu if it is my lesson AND NOT restricted
+      ----------------------- */}
+      {isMyLesson && !restricted && ( 
         <>
           {/* Menu Button */}
           <button

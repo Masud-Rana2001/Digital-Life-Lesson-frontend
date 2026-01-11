@@ -7,6 +7,17 @@ import LessonCard from './LessonCard';
 function SimilarLessons({ lesson }) {
   const {user} = useAuth()
   const axiosInstance = useAxiosSecure()
+
+    const { data: userDB = [] } = useQuery({
+    queryKey: ["userDB", user?.email],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/single-user`);
+      return res.data;
+    },
+  });
+
+
+
   const { data: similarLessons = [], refetch : similarLessonsRefetch } = useQuery({
   queryKey: ["similarLessons", lesson?._id],
   enabled: !!lesson?._id,
@@ -15,7 +26,7 @@ function SimilarLessons({ lesson }) {
     return res.data;
   },
 });
-console.log(similarLessons)
+
   return (
     <section className="px-1 md:px-5 py-5 md:py-8 bg-gradient-to-br from-sky-50 via-cyan-50 to-sky-100 mt-10 rounded-2xl shadow">
       <h2 className="text-2xl md:text-3xl font-extrabold text-center px-4 mb-3 md:mb-12 text-primary">
@@ -34,6 +45,7 @@ console.log(similarLessons)
                   key={lesson._id}
                   lesson={lesson}
                   user={user}
+                  userDB={userDB}
                   myLessonRefetch={similarLessonsRefetch}
                   // isPremiumUser={user?.premium === true} // optional
                 />
